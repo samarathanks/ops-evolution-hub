@@ -43,6 +43,11 @@
   --color-primary-soft: var(--primary-soft);
   --color-primary-deep: var(--primary-deep);
   --color-brand-mist: var(--brand-mist);
+  --color-violet: var(--violet);
+  --color-violet-deep: var(--violet-deep);
+  --color-violet-soft: var(--violet-soft);
+  --color-accent-soft: var(--accent-soft);
+
   --font-sans: "Manrope", ui-sans-serif, system-ui, sans-serif;
   --font-display: "Jost", ui-sans-serif, system-ui, sans-serif;
 
@@ -84,6 +89,12 @@
   --primary-soft: oklch(0.957 0.003 228.8);
   --primary-deep: oklch(0.374 0.016 244.6);
   --brand-mist: oklch(0.914 0.008 319.4);
+  /* Roxo digital herdado da primeira versão do site — apoio cromático */
+  --violet: oklch(0.42 0.17 295);
+  --violet-deep: oklch(0.3 0.13 295);
+  --violet-soft: oklch(0.962 0.017 295);
+  --accent-soft: oklch(0.968 0.035 88);
+
   --secondary: oklch(0.914 0.008 319.4);
   --secondary-foreground: oklch(0.374 0.016 244.6);
   --muted: oklch(0.972 0.003 240);
@@ -285,5 +296,53 @@
   .form-input:focus {
     border-color: var(--primary);
     box-shadow: 0 0 0 3px color-mix(in oklab, var(--primary) 18%, transparent);
+  }
+}
+
+@layer components {
+  .btn-violet {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    border-radius: var(--radius);
+    background-color: var(--violet);
+    padding: 0.85rem 1.5rem;
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: var(--primary-foreground);
+    transition: background-color 0.2s ease;
+  }
+  .btn-violet:hover {
+    background-color: var(--violet-deep);
+  }
+
+  .chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    border-radius: 999px;
+    border: 1px solid var(--border);
+    background-color: var(--background);
+    padding: 0.45rem 0.9rem;
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: var(--foreground);
+  }
+
+  .card-lift {
+    transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+  }
+  .card-lift:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 22px 50px -30px color-mix(in oklab, var(--violet) 55%, transparent);
+    border-color: color-mix(in oklab, var(--violet) 35%, var(--border));
+  }
+
+  .grid-dots {
+    background-image: radial-gradient(
+      color-mix(in oklab, var(--primary) 22%, transparent) 1px,
+      transparent 1px
+    );
+    background-size: 18px 18px;
   }
 }
