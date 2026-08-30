@@ -9,7 +9,7 @@ import {
   Compass,
   Database,
   Gauge,
-  Handshake,
+  
   Image as ImageIcon,
   Layers,
   Menu,
@@ -26,20 +26,20 @@ import {
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "Thanks Up | Boutique de Transformação Empresarial" },
+      { title: "Thanks Up | Inteligência Operacional Corporativa" },
       {
         name: "description",
         content:
-          "Organizamos a gestão da sua empresa: processos estruturados, tecnologia implantada e indicadores confiáveis para crescer com eficiência.",
+          "Processos, tecnologia e indicadores para empresas que querem crescer com mais organização, produtividade e controle. Conheça a Thanks Up.",
       },
       {
         property: "og:title",
-        content: "Thanks Up | Boutique de Transformação Empresarial",
+        content: "Thanks Up | Inteligência Operacional Corporativa",
       },
       {
         property: "og:description",
         content:
-          "Consultoria, implantação e assessoria contínua em gestão, processos, tecnologia e indicadores.",
+          "Diagnóstico, estruturação de processos, implantação tecnológica e acompanhamento da evolução operacional.",
       },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
@@ -158,7 +158,7 @@ function Hero() {
     <section id="inicio" className="pt-[72px]">
       <div className="mx-auto grid max-w-6xl items-center gap-12 px-5 py-16 lg:grid-cols-2 lg:gap-16 lg:py-28">
         <div>
-          <Eyebrow>Boutique de Transformação Empresarial</Eyebrow>
+          <Eyebrow>Inteligência Operacional Corporativa</Eyebrow>
           <h1 className="text-[34px] font-extrabold leading-[1.12] text-foreground sm:text-5xl">
             Organizamos a gestão da sua empresa para que ela cresça com{" "}
             <span className="text-primary">eficiência</span>.
@@ -176,9 +176,8 @@ function Hero() {
               Conheça o Método DNA
             </a>
           </div>
-          <p className="mt-7 border-l-2 border-accent pl-4 text-sm leading-relaxed text-muted-foreground">
-            Estratégia, processos, tecnologia e acompanhamento em uma única jornada de
-            transformação.
+          <p className="mt-7 border-l-2 border-accent pl-4 text-sm font-medium leading-relaxed text-muted-foreground">
+            Eficiência corporativa com inteligência estratégica.
           </p>
         </div>
         <Placeholder
@@ -267,18 +266,23 @@ function Challenges() {
 const VALUE_STEPS = [
   {
     icon: Compass,
-    title: "Consultoria",
-    text: "Diagnóstico, análise, desenho da solução e definição do plano de transformação.",
+    title: "Diagnóstico",
+    text: "Compreendemos o cenário atual, os gargalos, os objetivos e as prioridades da empresa.",
   },
   {
     icon: Layers,
-    title: "Implantação",
-    text: "Configuração de processos, tecnologia, indicadores, automações e capacitação da equipe.",
+    title: "Estruturação",
+    text: "Desenhamos processos, responsabilidades, fluxos, indicadores e o plano de evolução da operação.",
   },
   {
-    icon: Handshake,
-    title: "Assessoria",
-    text: "Acompanhamento contínuo, análise dos resultados, ajustes e evolução da operação.",
+    icon: Settings2,
+    title: "Implantação",
+    text: "Colocamos processos, tecnologia, automações e indicadores em funcionamento, capacitando as equipes envolvidas.",
+  },
+  {
+    icon: Gauge,
+    title: "Acompanhamento",
+    text: "Monitoramos a adoção, os resultados e as oportunidades de melhoria contínua.",
   },
 ];
 
@@ -289,16 +293,16 @@ function ValueProposition() {
         <div className="max-w-3xl">
           <Eyebrow>Como atuamos</Eyebrow>
           <h2 className="text-[28px] font-bold leading-tight text-foreground sm:text-[38px]">
-            Não entregamos apenas recomendações. Ajudamos a transformar a operação.
+            Não entregamos apenas recomendações. Desenvolvemos e implantamos soluções para
+            transformar a operação.
           </h2>
           <p className="mt-5 text-[17px] leading-relaxed text-muted-foreground">
-            A Thanks Up atua desde a compreensão do problema até a implantação e o
-            acompanhamento das melhorias. Primeiro entendemos a realidade da empresa. Depois
-            estruturamos processos, definimos prioridades, implantamos as soluções
-            necessárias e acompanhamos a evolução da gestão.
+            A Thanks Up atua desde a compreensão do cenário até a implantação e o
+            acompanhamento das melhorias. Estruturamos processos, conectamos tecnologia,
+            organizamos indicadores e apoiamos a evolução da gestão.
           </p>
         </div>
-        <div className="mt-14 grid gap-6 md:grid-cols-3">
+        <div className="mt-14 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
           {VALUE_STEPS.map(({ icon: Icon, title, text }, i) => (
             <div key={title} className="relative rounded-xl bg-muted/70 p-7">
               <div className="flex items-center gap-3">
@@ -317,8 +321,8 @@ function ValueProposition() {
           ))}
         </div>
         <p className="mx-auto mt-12 max-w-3xl text-center text-[17px] leading-relaxed text-foreground">
-          A consultoria mostra o caminho. A implantação coloca a transformação em prática. A
-          assessoria impede que a empresa volte ao ponto de partida.
+          O diagnóstico revela as prioridades. A estruturação define o caminho. A
+          implantação transforma a operação. O acompanhamento sustenta a evolução.
         </p>
       </div>
     </section>
@@ -328,9 +332,9 @@ function ValueProposition() {
 const SOLUTIONS = [
   {
     code: "TU001",
-    name: "Diagnóstico Estratégico Empresarial",
+    name: "Diagnóstico Operacional Empresarial",
     benefit: "Descubra onde sua empresa pode evoluir.",
-    text: "Analisamos a operação, identificamos gargalos, riscos e oportunidades e construímos uma visão clara das prioridades do negócio.",
+    text: "Analisamos a operação, identificamos gargalos, riscos e oportunidades e organizamos as prioridades para a evolução do negócio.",
     items: [
       "levantamento do cenário atual",
       "análise dos processos",
@@ -345,8 +349,8 @@ const SOLUTIONS = [
   {
     code: "TU002",
     name: "Estruturação de Processos e Governança",
-    benefit: "Organize a operação para crescer com mais controle.",
-    text: "Mapeamos e estruturamos processos, responsabilidades, fluxos de decisão e formas de acompanhamento para construir uma gestão mais organizada e previsível.",
+    benefit: "Organize sua operação para crescer com mais controle.",
+    text: "Mapeamos e estruturamos processos, responsabilidades, fluxos de decisão e formas de acompanhamento para tornar a gestão mais organizada e previsível.",
     items: [
       "mapeamento de processos",
       "definição de responsabilidades",
@@ -361,9 +365,9 @@ const SOLUTIONS = [
   },
   {
     code: "TU003",
-    name: "Transformação Digital Empresarial",
+    name: "Implantação e Transformação Digital",
     benefit: "Integre pessoas, processos e tecnologia em uma única operação.",
-    text: "Implantamos tecnologia a partir da realidade da empresa, conectando processos, áreas e informações para reduzir atividades manuais e aumentar o controle da gestão.",
+    text: "Implantamos soluções tecnológicas alinhadas à realidade da empresa, conectando áreas, informações e processos para aumentar produtividade e controle.",
     items: [
       "desenho da solução",
       "implantação e configuração",
@@ -379,9 +383,9 @@ const SOLUTIONS = [
   },
   {
     code: "TU004",
-    name: "Assessoria Estratégica em Gestão",
+    name: "Gestão da Evolução Operacional",
     benefit: "Tenha indicadores em tempo real para tomar decisões com segurança.",
-    text: "Acompanhamos a evolução da operação, analisamos resultados e apoiamos a liderança na priorização e implantação de novas melhorias.",
+    text: "Acompanhamos indicadores, adoção, resultados e oportunidades de melhoria para apoiar a liderança e manter a operação em evolução contínua.",
     items: [
       "reuniões periódicas",
       "acompanhamento de indicadores",
@@ -392,7 +396,7 @@ const SOLUTIONS = [
       "apoio à tomada de decisão",
       "expansão das soluções implantadas",
     ],
-    cta: "Conhecer assessoria",
+    cta: "Conhecer gestão da evolução",
     icon: Gauge,
   },
 ];
@@ -488,14 +492,9 @@ function MethodDNA() {
               Desenvolvimento de Negócios e Ativos
             </p>
             <p className="mt-6 text-[17px] leading-relaxed text-muted-foreground">
-              Cada empresa possui uma realidade própria. Por isso, nossos projetos não
-              começam pela ferramenta ou por uma solução pronta. Começam pela compreensão do
-              negócio.
-            </p>
-            <p className="mt-4 text-[17px] leading-relaxed text-muted-foreground">
-              O Método DNA é a metodologia proprietária da Thanks Up para diagnosticar a
-              operação, estruturar prioridades, implantar melhorias e acompanhar os
-              resultados da transformação.
+              O Método DNA é a metodologia proprietária da Thanks Up para compreender a
+              realidade da empresa, organizar prioridades, estruturar soluções, implantar
+              melhorias e acompanhar a evolução da operação.
             </p>
           </div>
 
@@ -550,12 +549,12 @@ function Zoho() {
         <div>
           <Eyebrow>Tecnologia aplicada à realidade do negócio</Eyebrow>
           <h2 className="text-[28px] font-bold leading-tight text-foreground sm:text-[38px]">
-            Mais do que implantar um CRM, estruturamos a operação que será gerenciada por
-            ele.
+            Implantação e evolução do Zoho CRM e Zoho CRM Plus
           </h2>
           <p className="mt-6 text-[17px] leading-relaxed text-muted-foreground">
-            Como Parceiros Consultores Oficiais Zoho, apoiamos empresas na implantação e
-            evolução do Zoho CRM e do Zoho CRM Plus.
+            Como Parceiros Consultores Oficiais Zoho, apoiamos empresas no diagnóstico do
+            processo comercial, configuração da plataforma, organização e migração de dados,
+            automações, capacitação dos usuários e evolução da operação.
           </p>
           <p className="mt-4 text-[17px] leading-relaxed text-muted-foreground">
             Nosso trabalho começa antes da configuração da plataforma. Primeiro analisamos o
@@ -575,8 +574,8 @@ function Zoho() {
             ))}
           </ul>
           <p className="mt-8 rounded-xl border-l-4 border-accent bg-card px-6 py-5 text-[17px] leading-relaxed text-foreground">
-            O CRM não deve obrigar a empresa a se adaptar a uma ferramenta mal configurada. A
-            tecnologia deve refletir o processo que a empresa precisa executar.
+            Mais do que configurar uma plataforma, estruturamos a operação que será
+            gerenciada por ela.
           </p>
           <a href="#contato" className="btn-primary mt-8">
             Falar sobre Zoho CRM
@@ -601,27 +600,27 @@ const DIFFS = [
   {
     icon: Compass,
     title: "Visão de negócio antes da tecnologia",
-    text: "Não começamos pela ferramenta. Começamos entendendo o problema, o processo e o resultado esperado.",
+    text: "Compreendemos o processo, o problema e o resultado esperado antes de definir a solução.",
   },
   {
     icon: Layers,
-    title: "Consultoria e execução",
-    text: "Não entregamos apenas um relatório. Participamos da implantação das melhorias definidas.",
+    title: "Estruturação e execução",
+    text: "Não entregamos apenas recomendações. Participamos da implantação das melhorias definidas.",
   },
   {
     icon: Gauge,
-    title: "Acompanhamento após o projeto",
-    text: "Apoiamos a adoção, analisamos indicadores e conduzimos a evolução da operação.",
+    title: "Acompanhamento da evolução",
+    text: "Monitoramos adoção, indicadores, resultados e novas oportunidades de melhoria.",
   },
   {
     icon: Settings2,
-    title: "Soluções desenhadas para cada realidade",
-    text: "O projeto respeita o porte, a maturidade, as prioridades e a capacidade de execução da empresa.",
+    title: "Soluções adaptadas à realidade da empresa",
+    text: "Cada projeto respeita a maturidade, as prioridades e a capacidade de execução da organização.",
   },
   {
     icon: Users,
-    title: "Comunicação próxima da liderança",
-    text: "Trabalhamos em conjunto com os responsáveis pelas decisões e com as equipes que executarão os novos processos.",
+    title: "Proximidade com a liderança e as equipes",
+    text: "Trabalhamos com quem decide e com quem executará os novos processos no dia a dia.",
   },
 ];
 
@@ -765,13 +764,12 @@ function FinalCTA() {
           segurança?
         </h2>
         <p className="mx-auto mt-6 max-w-2xl text-[17px] leading-relaxed text-primary-foreground/85">
-          O primeiro passo não é contratar uma plataforma ou iniciar um projeto extenso. É
-          entender onde estão os gargalos, quais mudanças devem ser priorizadas e qual
-          caminho faz sentido para a realidade da sua empresa.
+          O primeiro passo é compreender onde estão os gargalos, quais mudanças devem ser
+          priorizadas e qual caminho faz sentido para a realidade da sua operação.
         </p>
         <div className="mt-9 flex flex-col justify-center gap-3 sm:flex-row">
           <a href="#contato" className="btn-accent justify-center">
-            Solicitar diagnóstico estratégico
+            Solicitar diagnóstico operacional
           </a>
           <a href="#contato" className="btn-inverse justify-center">
             Falar com a Thanks Up
@@ -787,11 +785,11 @@ function FinalCTA() {
 }
 
 const SOLUTION_OPTIONS = [
-  "Diagnóstico Estratégico Empresarial",
+  "Diagnóstico Operacional Empresarial",
   "Estruturação de Processos e Governança",
-  "Transformação Digital Empresarial",
-  "Zoho CRM",
-  "Assessoria Estratégica em Gestão",
+  "Implantação e Transformação Digital",
+  "Zoho CRM e Zoho CRM Plus",
+  "Gestão da Evolução Operacional",
   "Ainda não sei qual solução preciso",
 ];
 
@@ -818,7 +816,7 @@ function Contact() {
         <div>
           <Eyebrow>Contato</Eyebrow>
           <h2 className="text-[28px] font-bold leading-tight text-foreground sm:text-[36px]">
-            Solicite um diagnóstico estratégico
+            Solicite um diagnóstico operacional
           </h2>
           <p className="mt-5 text-[17px] leading-relaxed text-muted-foreground">
             Conte brevemente o cenário atual da sua empresa. A partir das informações
@@ -908,9 +906,12 @@ function Footer() {
       <div className="mx-auto grid max-w-6xl gap-10 px-5 md:grid-cols-[1.2fr_0.8fr_0.8fr]">
         <div>
           <Logo />
-          <p className="mt-5 max-w-sm text-[15px] leading-relaxed text-muted-foreground">
-            Boutique de transformação empresarial especializada em estratégia, processos,
-            tecnologia e inteligência de gestão.
+          <p className="mt-4 text-[13px] font-semibold uppercase tracking-[0.14em] text-primary">
+            Inteligência Operacional Corporativa
+          </p>
+          <p className="mt-4 max-w-sm text-[15px] leading-relaxed text-muted-foreground">
+            Estruturamos processos, implantamos tecnologia e desenvolvemos indicadores para
+            empresas que querem crescer com mais organização, controle e produtividade.
           </p>
           <p className="mt-5 text-sm font-medium text-foreground">
             Uma empresa do Ecossistema Thanks.
