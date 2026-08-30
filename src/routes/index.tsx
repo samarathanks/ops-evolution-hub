@@ -61,20 +61,33 @@ const NAV = [
   { label: "Contato", href: "#contato" },
 ];
 
-function Logo({ variant = "color", className = "" }: { variant?: "color" | "white"; className?: string }) {
-  const src = variant === "white" ? logoWhite.url : logoColor.url;
+function Logo({
+  variant = "color",
+  className = "",
+  sizeClass = "h-9 w-auto sm:h-10",
+}: {
+  variant?: "color" | "white";
+  className?: string;
+  sizeClass?: string;
+}) {
+  const white = variant === "white";
   return (
-    <a href="#inicio" className={`inline-flex items-center ${className}`} aria-label="Thanks Up Gestão de Negócios">
+    <a
+      href="#inicio"
+      className={`inline-flex items-center ${className}`}
+      aria-label="Thanks Up Gestão de Negócios"
+    >
       <img
-        src={src}
+        src={white ? logoWhite.url : logoColor.url}
         alt="Thanks Up Gestão de Negócios"
-        className="h-9 w-auto sm:h-10"
-        width={1400}
-        height={306}
+        className={sizeClass}
+        width={white ? 1204 : 1400}
+        height={white ? 263 : 306}
       />
     </a>
   );
 }
+
 
 function BrandMark({ className = "" }: { className?: string }) {
   return (
