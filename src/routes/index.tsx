@@ -1006,49 +1006,52 @@ const DIFFS = [
 function WhyUs() {
   return (
     <section id="por-que" className="bg-background py-20 lg:py-28">
-      <div className="mx-auto max-w-6xl px-5">
-        <div className="grid gap-8 lg:grid-cols-[0.9fr_1.1fr] lg:items-end">
-          <div>
-            <Eyebrow>Diferenciais</Eyebrow>
-            <SectionTitle className="text-foreground">
-              Por que conduzir essa transformação com a Thanks Up?
-            </SectionTitle>
-          </div>
-          <Placeholder
-            className="min-h-[120px] lg:min-h-[140px]"
-            label="Espaço reservado para foto real da equipe Thanks Up em ambiente corporativo."
-          />
-        </div>
+      <div className="mx-auto grid max-w-6xl gap-12 px-5 lg:grid-cols-[1.05fr_0.95fr] lg:gap-16">
+        <div>
+          <Eyebrow>Diferenciais</Eyebrow>
+          <SectionTitle className="text-foreground">
+            Por que conduzir essa transformação com a{" "}
+            <span className="text-violet">Thanks Up</span>?
+          </SectionTitle>
 
-        <div className="mt-12 grid gap-5 md:grid-cols-2 lg:grid-cols-3">
-          {DIFFS.map(({ icon: Icon, title, text }, i) => (
-            <div
-              key={title}
-              className={`card-lift rounded-2xl border border-border p-7 ${
-                i === 0 ? "bg-brand-mist" : i === 4 ? "bg-violet-soft" : "bg-card"
-              }`}
-            >
-              <div className="flex items-center justify-between">
-                <span className="flex h-11 w-11 items-center justify-center rounded-xl bg-violet text-primary-foreground">
+          <ul className="mt-10 space-y-1">
+            {DIFFS.map(({ icon: Icon, title, text }, i) => (
+              <li
+                key={title}
+                className="grid grid-cols-[auto_minmax(0,1fr)] gap-5 border-l-2 border-border py-5 pl-6 transition-colors hover:border-accent"
+              >
+                <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-violet-soft text-violet">
                   <Icon size={19} />
                 </span>
-                <span className="text-[24px] font-extrabold text-violet/20">
-                  0{i + 1}
-                </span>
-              </div>
-              <h3 className="mt-5 text-[17px] font-semibold leading-snug text-foreground">
-                {title}
-              </h3>
-              <p className="mt-2 text-[15px] leading-relaxed text-muted-foreground">
-                {text}
-              </p>
-            </div>
-          ))}
-          <div className="flex flex-col justify-center rounded-2xl bg-primary-deep p-7 text-primary-foreground">
-            <p className="text-[18px] font-semibold leading-snug">
+                <div className="min-w-0">
+                  <div className="flex items-baseline gap-3">
+                    <span className="text-[12px] font-bold tracking-widest text-violet/40">
+                      0{i + 1}
+                    </span>
+                    <h3 className="text-[17px] font-semibold leading-snug text-foreground">
+                      {title}
+                    </h3>
+                  </div>
+                  <p className="mt-1.5 text-[15px] leading-relaxed text-muted-foreground">
+                    {text}
+                  </p>
+                </div>
+              </li>
+            ))}
+          </ul>
+        </div>
+
+        <div className="flex flex-col gap-6 lg:sticky lg:top-28 lg:self-start">
+          <Placeholder
+            className="min-h-[260px]"
+            label="Espaço reservado para foto real da equipe Thanks Up em reunião com cliente."
+          />
+          <div className="rounded-2xl bg-primary-deep p-7 text-primary-foreground">
+            <Sparkles size={22} className="text-accent" />
+            <p className="mt-4 text-[18px] font-semibold leading-snug">
               Pessoas próximas da operação e comprometidas com a execução.
             </p>
-            <a href="#contato" className="btn-accent mt-6 self-start">
+            <a href="#contato" className="btn-accent mt-6">
               Falar com a equipe
             </a>
           </div>
@@ -1057,6 +1060,7 @@ function WhyUs() {
     </section>
   );
 }
+
 
 /* ---------------- PERFIL DE CLIENTE ---------------- */
 
