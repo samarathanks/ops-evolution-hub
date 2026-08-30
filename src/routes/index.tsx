@@ -72,7 +72,7 @@ const NAV = [
 function Logo({
   variant = "color",
   className = "",
-  sizeClass = "h-9 w-auto sm:h-10",
+  sizeClass = "h-11 w-auto sm:h-12",
 }: {
   variant?: "color" | "white";
   className?: string;
@@ -111,7 +111,7 @@ function Header() {
   const [open, setOpen] = useState(false);
   return (
     <header className="fixed inset-x-0 top-0 z-50 border-b border-border/70 bg-background/90 backdrop-blur">
-      <div className="mx-auto flex h-[72px] max-w-6xl items-center justify-between px-5">
+      <div className="mx-auto flex h-[88px] max-w-6xl items-center justify-between px-5">
         <Logo className="shrink-0" />
         <nav className="hidden items-center gap-7 lg:flex">
           {NAV.map((item) => (
@@ -359,15 +359,15 @@ function DashboardMock() {
 
 function Hero() {
   return (
-    <section id="inicio" className="relative overflow-hidden pt-[72px]">
+    <section id="inicio" className="relative overflow-hidden pt-[88px]">
       <div
         className="pointer-events-none absolute inset-x-0 top-0 h-[70%] bg-violet-soft"
         aria-hidden="true"
       />
-      <div className="relative mx-auto grid max-w-6xl items-center gap-14 px-5 py-16 lg:grid-cols-[1.05fr_0.95fr] lg:gap-16 lg:py-24">
+      <div className="relative mx-auto grid max-w-6xl items-center gap-14 px-5 pb-12 pt-14 lg:grid-cols-[1.05fr_0.95fr] lg:gap-16 lg:pb-16 lg:pt-20">
         <div>
           <Eyebrow>Inteligência Operacional Corporativa</Eyebrow>
-          <h1 className="text-[34px] font-extrabold leading-[1.08] text-foreground sm:text-[52px]">
+          <h1 className="max-w-[16ch] text-[34px] font-extrabold leading-[1.08] text-foreground sm:text-[50px]">
             Organizamos a gestão da sua empresa para que ela cresça com{" "}
             <span className="text-violet">eficiência</span>.
           </h1>
@@ -390,9 +390,12 @@ function Hero() {
               Conheça o Método DNA
             </a>
           </div>
-          <p className="mt-7 border-l-2 border-accent pl-4 text-sm font-semibold uppercase tracking-[0.1em] text-primary-deep">
-            Eficiência corporativa com inteligência estratégica.
-          </p>
+          <div className="mt-8 inline-flex items-center gap-3 rounded-full border border-accent/60 bg-accent-soft px-5 py-2.5">
+            <span className="h-2 w-2 shrink-0 rounded-full bg-accent" aria-hidden="true" />
+            <p className="text-[13px] font-semibold uppercase tracking-[0.12em] text-primary-deep">
+              Eficiência corporativa com inteligência estratégica.
+            </p>
+          </div>
         </div>
         <DashboardMock />
       </div>
@@ -457,7 +460,7 @@ const ICON_TONES: Record<string, string> = {
 
 function Challenges() {
   return (
-    <section id="desafios" className="bg-background py-20 lg:py-28">
+    <section id="desafios" className="bg-background py-16 lg:py-24">
       <div className="mx-auto max-w-6xl px-5">
         <div className="grid gap-8 lg:grid-cols-[0.95fr_1.05fr] lg:items-end">
           <div>
@@ -1110,7 +1113,7 @@ const POSTS = [
 
 function Content() {
   return (
-    <section className="bg-background py-20 lg:py-28">
+    <section id="conteudos" className="bg-violet-soft py-20 lg:py-24">
       <div className="mx-auto max-w-6xl px-5">
         <div className="max-w-3xl">
           <Eyebrow>Conteúdos</Eyebrow>
