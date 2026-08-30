@@ -9,7 +9,7 @@ import {
   Compass,
   Database,
   Gauge,
-  Handshake,
+  
   Image as ImageIcon,
   Layers,
   Menu,
