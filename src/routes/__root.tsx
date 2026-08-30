@@ -77,18 +77,18 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "Thanks Up Gestão de Negócios" },
+      { title: "Thanks Up | Inteligência Operacional Corporativa" },
       {
         name: "description",
         content:
-          "Boutique de transformação empresarial: processos, tecnologia e indicadores.",
+          "Processos, tecnologia e indicadores para empresas que querem crescer com mais organização, produtividade e controle. Conheça a Thanks Up.",
       },
       { name: "author", content: "Thanks Up Gestão de Negócios" },
-      { property: "og:title", content: "Thanks Up Gestão de Negócios" },
+      { property: "og:title", content: "Thanks Up | Inteligência Operacional Corporativa" },
       {
         property: "og:description",
         content:
-          "Boutique de transformação empresarial: processos, tecnologia e indicadores.",
+          "Diagnóstico, estruturação de processos, implantação tecnológica e acompanhamento da evolução operacional.",
       },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },

@@ -764,13 +764,12 @@ function FinalCTA() {
           segurança?
         </h2>
         <p className="mx-auto mt-6 max-w-2xl text-[17px] leading-relaxed text-primary-foreground/85">
-          O primeiro passo não é contratar uma plataforma ou iniciar um projeto extenso. É
-          entender onde estão os gargalos, quais mudanças devem ser priorizadas e qual
-          caminho faz sentido para a realidade da sua empresa.
+          O primeiro passo é compreender onde estão os gargalos, quais mudanças devem ser
+          priorizadas e qual caminho faz sentido para a realidade da sua operação.
         </p>
         <div className="mt-9 flex flex-col justify-center gap-3 sm:flex-row">
           <a href="#contato" className="btn-accent justify-center">
-            Solicitar diagnóstico estratégico
+            Solicitar diagnóstico operacional
           </a>
           <a href="#contato" className="btn-inverse justify-center">
             Falar com a Thanks Up
@@ -786,11 +785,11 @@ function FinalCTA() {
 }
 
 const SOLUTION_OPTIONS = [
-  "Diagnóstico Estratégico Empresarial",
+  "Diagnóstico Operacional Empresarial",
   "Estruturação de Processos e Governança",
-  "Transformação Digital Empresarial",
-  "Zoho CRM",
-  "Assessoria Estratégica em Gestão",
+  "Implantação e Transformação Digital",
+  "Zoho CRM e Zoho CRM Plus",
+  "Gestão da Evolução Operacional",
   "Ainda não sei qual solução preciso",
 ];
 
@@ -817,7 +816,7 @@ function Contact() {
         <div>
           <Eyebrow>Contato</Eyebrow>
           <h2 className="text-[28px] font-bold leading-tight text-foreground sm:text-[36px]">
-            Solicite um diagnóstico estratégico
+            Solicite um diagnóstico operacional
           </h2>
           <p className="mt-5 text-[17px] leading-relaxed text-muted-foreground">
             Conte brevemente o cenário atual da sua empresa. A partir das informações
@@ -907,9 +906,12 @@ function Footer() {
       <div className="mx-auto grid max-w-6xl gap-10 px-5 md:grid-cols-[1.2fr_0.8fr_0.8fr]">
         <div>
           <Logo />
-          <p className="mt-5 max-w-sm text-[15px] leading-relaxed text-muted-foreground">
-            Boutique de transformação empresarial especializada em estratégia, processos,
-            tecnologia e inteligência de gestão.
+          <p className="mt-4 text-[13px] font-semibold uppercase tracking-[0.14em] text-primary">
+            Inteligência Operacional Corporativa
+          </p>
+          <p className="mt-4 max-w-sm text-[15px] leading-relaxed text-muted-foreground">
+            Estruturamos processos, implantamos tecnologia e desenvolvemos indicadores para
+            empresas que querem crescer com mais organização, controle e produtividade.
           </p>
           <p className="mt-5 text-sm font-medium text-foreground">
             Uma empresa do Ecossistema Thanks.
