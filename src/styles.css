@@ -42,7 +42,10 @@
   --color-accent-foreground: var(--accent-foreground);
   --color-primary-soft: var(--primary-soft);
   --color-primary-deep: var(--primary-deep);
-  --font-sans: "Plus Jakarta Sans", ui-sans-serif, system-ui, sans-serif;
+  --color-brand-mist: var(--brand-mist);
+  --font-sans: "Manrope", ui-sans-serif, system-ui, sans-serif;
+  --font-display: "Jost", ui-sans-serif, system-ui, sans-serif;
+
   --color-destructive: var(--destructive);
   --color-destructive-foreground: var(--destructive-foreground);
   --color-border: var(--border);
@@ -66,27 +69,33 @@
 
 :root {
   --radius: 0.5rem;
+  /* Paleta oficial — Manual da Marca Thanks Up
+     PMS 431C  #5B6670 (grafite institucional)
+     PMS 130C  #F5A800 (amarelo institucional)
+     PMS 663C  #E5E1E6 (cinza claro secundário) */
   --background: oklch(1 0 0);
-  --foreground: oklch(0.24 0.015 285);
+  --foreground: oklch(0.31 0.015 252);
   --card: oklch(1 0 0);
-  --card-foreground: oklch(0.24 0.015 285);
+  --card-foreground: oklch(0.31 0.015 252);
   --popover: oklch(1 0 0);
-  --popover-foreground: oklch(0.24 0.015 285);
-  --primary: oklch(0.42 0.17 295);
-  --primary-foreground: oklch(0.99 0.005 285);
-  --primary-soft: oklch(0.96 0.02 295);
-  --primary-deep: oklch(0.3 0.13 295);
-  --secondary: oklch(0.97 0.004 285);
-  --secondary-foreground: oklch(0.3 0.13 295);
-  --muted: oklch(0.972 0.004 285);
-  --muted-foreground: oklch(0.52 0.012 285);
-  --accent: oklch(0.86 0.16 92);
-  --accent-foreground: oklch(0.26 0.04 90);
+  --popover-foreground: oklch(0.31 0.015 252);
+  --primary: oklch(0.504 0.021 245.7);
+  --primary-foreground: oklch(1 0 0);
+  --primary-soft: oklch(0.957 0.003 228.8);
+  --primary-deep: oklch(0.374 0.016 244.6);
+  --brand-mist: oklch(0.914 0.008 319.4);
+  --secondary: oklch(0.914 0.008 319.4);
+  --secondary-foreground: oklch(0.374 0.016 244.6);
+  --muted: oklch(0.972 0.003 240);
+  --muted-foreground: oklch(0.545 0.019 245);
+  --accent: oklch(0.786 0.165 75.9);
+  --accent-foreground: oklch(0.31 0.015 252);
   --destructive: oklch(0.577 0.245 27.325);
-  --destructive-foreground: oklch(0.984 0.003 247.858);
-  --border: oklch(0.929 0.013 255.508);
-  --input: oklch(0.929 0.013 255.508);
-  --ring: oklch(0.704 0.04 256.788);
+  --destructive-foreground: oklch(0.99 0 0);
+  --border: oklch(0.914 0.008 319.4);
+  --input: oklch(0.914 0.008 319.4);
+  --ring: oklch(0.504 0.021 245.7);
+
   --chart-1: oklch(0.646 0.222 41.116);
   --chart-2: oklch(0.6 0.118 184.704);
   --chart-3: oklch(0.398 0.07 227.392);
@@ -161,12 +170,22 @@
 
   h1,
   h2,
-  h3 {
-    letter-spacing: -0.02em;
+  h3,
+  h4 {
+    font-family: var(--font-display);
+    font-weight: 600;
+    letter-spacing: -0.01em;
   }
 }
 
 @layer components {
+  .brand-rule {
+    height: 3px;
+    width: 3.25rem;
+    border-radius: 999px;
+    background-color: var(--accent);
+  }
+
   .btn-primary {
     display: inline-flex;
     align-items: center;
