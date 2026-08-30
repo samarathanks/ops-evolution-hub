@@ -60,14 +60,14 @@ export const Route = createFileRoute("/")({
 });
 
 const NAV = [
-  { label: "Início", href: "#inicio" },
-  { label: "Desafios", href: "#desafios" },
   { label: "Soluções", href: "#solucoes" },
   { label: "Método DNA", href: "#metodo-dna" },
   { label: "Zoho", href: "#zoho" },
   { label: "Por que a Thanks Up", href: "#por-que" },
+  { label: "Conteúdos", href: "#conteudos" },
   { label: "Contato", href: "#contato" },
 ];
+
 
 function Logo({
   variant = "color",
