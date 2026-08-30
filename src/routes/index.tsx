@@ -939,7 +939,7 @@ function Footer() {
       <BrandMark className="pointer-events-none absolute -bottom-10 right-4 h-52 w-auto opacity-[0.06]" />
       <div className="mx-auto grid max-w-6xl gap-10 px-5 md:grid-cols-[1.2fr_0.8fr_0.8fr]">
         <div>
-          <Logo variant="white" />
+          <Logo variant="white" sizeClass="h-11 w-auto" />
           <p className="mt-4 text-[13px] font-semibold uppercase tracking-[0.14em] text-accent">
             Inteligência Operacional Corporativa
           </p>
