@@ -43,6 +43,11 @@
   --color-primary-soft: var(--primary-soft);
   --color-primary-deep: var(--primary-deep);
   --color-brand-mist: var(--brand-mist);
+  --color-violet: var(--violet);
+  --color-violet-deep: var(--violet-deep);
+  --color-violet-soft: var(--violet-soft);
+  --color-accent-soft: var(--accent-soft);
+
   --font-sans: "Manrope", ui-sans-serif, system-ui, sans-serif;
   --font-display: "Jost", ui-sans-serif, system-ui, sans-serif;
 
@@ -84,6 +89,12 @@
   --primary-soft: oklch(0.957 0.003 228.8);
   --primary-deep: oklch(0.374 0.016 244.6);
   --brand-mist: oklch(0.914 0.008 319.4);
+  /* Roxo digital herdado da primeira versão do site — apoio cromático */
+  --violet: oklch(0.42 0.17 295);
+  --violet-deep: oklch(0.3 0.13 295);
+  --violet-soft: oklch(0.962 0.017 295);
+  --accent-soft: oklch(0.968 0.035 88);
+
   --secondary: oklch(0.914 0.008 319.4);
   --secondary-foreground: oklch(0.374 0.016 244.6);
   --muted: oklch(0.972 0.003 240);
