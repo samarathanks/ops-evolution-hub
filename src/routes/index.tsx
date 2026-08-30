@@ -1,4 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
+import logoColor from "../assets/thanksup-logo.png.asset.json";
+import logoWhite from "../assets/thanksup-logo-branco.png.asset.json";
+import brandSymbol from "../assets/thanksup-simbolo.png.asset.json";
 import { useState, type FormEvent } from "react";
 import {
   ArrowRight,
@@ -58,19 +61,31 @@ const NAV = [
   { label: "Contato", href: "#contato" },
 ];
 
-function Logo() {
+function Logo({ variant = "color", className = "" }: { variant?: "color" | "white"; className?: string }) {
+  const src = variant === "white" ? logoWhite.url : logoColor.url;
   return (
-    <a href="#inicio" className="flex items-center gap-2.5">
-      <span className="flex h-9 w-9 items-center justify-center rounded-md bg-primary text-primary-foreground text-sm font-extrabold">
-        TU
-      </span>
-      <span className="leading-tight">
-        <span className="block text-[15px] font-bold text-foreground">Thanks Up</span>
-        <span className="block text-[11px] uppercase tracking-[0.14em] text-muted-foreground">
-          Gestão de Negócios
-        </span>
-      </span>
+    <a href="#inicio" className={`inline-flex items-center ${className}`} aria-label="Thanks Up Gestão de Negócios">
+      <img
+        src={src}
+        alt="Thanks Up Gestão de Negócios"
+        className="h-9 w-auto sm:h-10"
+        width={1400}
+        height={306}
+      />
     </a>
+  );
+}
+
+function BrandMark({ className = "" }: { className?: string }) {
+  return (
+    <img
+      src={brandSymbol.url}
+      alt=""
+      aria-hidden="true"
+      className={className}
+      width={209}
+      height={186}
+    />
   );
 }
 
@@ -79,7 +94,7 @@ function Header() {
   return (
     <header className="fixed inset-x-0 top-0 z-50 border-b border-border/70 bg-background/90 backdrop-blur">
       <div className="mx-auto flex h-[72px] max-w-6xl items-center justify-between px-5">
-        <Logo />
+        <Logo className="shrink-0" />
         <nav className="hidden items-center gap-7 lg:flex">
           {NAV.map((item) => (
             <a
@@ -134,7 +149,8 @@ function Header() {
 
 function Eyebrow({ children }: { children: string }) {
   return (
-    <p className="mb-4 text-[12px] font-semibold uppercase tracking-[0.18em] text-primary">
+    <p className="mb-4 flex items-center gap-3 text-[12px] font-semibold uppercase tracking-[0.18em] text-primary">
+      <span className="brand-rule" aria-hidden="true" />
       {children}
     </p>
   );
@@ -143,8 +159,9 @@ function Eyebrow({ children }: { children: string }) {
 function Placeholder({ label, className = "" }: { label: string; className?: string }) {
   return (
     <div
-      className={`flex flex-col items-center justify-center gap-3 rounded-xl border border-dashed border-primary/25 bg-primary-soft/60 p-8 text-center ${className}`}
+      className={`relative flex flex-col items-center justify-center gap-3 overflow-hidden rounded-xl border border-dashed border-secondary bg-primary-soft p-8 text-center ${className}`}
     >
+      <BrandMark className="pointer-events-none absolute -right-6 -top-6 h-24 w-auto opacity-[0.07]" />
       <span className="flex h-11 w-11 items-center justify-center rounded-full bg-background text-primary shadow-sm">
         <ImageIcon size={20} />
       </span>
@@ -242,7 +259,7 @@ function Challenges() {
           {CHALLENGES.map(({ icon: Icon, title, text }) => (
             <article
               key={title}
-              className="rounded-xl border border-border bg-card p-7 transition-shadow hover:shadow-[0_12px_40px_-24px_oklch(0.42_0.17_295/0.6)]"
+              className="rounded-xl border border-border bg-card p-7 transition-shadow hover:shadow-[0_14px_40px_-26px_oklch(0.31_0.015_252/0.55)]"
             >
               <span className="flex h-11 w-11 items-center justify-center rounded-lg bg-primary-soft text-primary">
                 <Icon size={20} />
@@ -482,8 +499,9 @@ function MethodDNA() {
   return (
     <section id="metodo-dna" className="py-20 lg:py-28">
       <div className="mx-auto max-w-6xl px-5">
-        <div className="rounded-2xl border border-border bg-card p-8 sm:p-12 lg:p-16">
-          <div className="max-w-3xl">
+        <div className="relative overflow-hidden rounded-2xl border border-border bg-card p-8 sm:p-12 lg:p-16">
+          <BrandMark className="pointer-events-none absolute -right-10 -top-10 h-44 w-auto opacity-[0.05]" />
+          <div className="relative max-w-3xl">
             <Eyebrow>Metodologia proprietária</Eyebrow>
             <h2 className="text-[30px] font-extrabold leading-tight text-foreground sm:text-[42px]">
               Método DNA
@@ -757,8 +775,10 @@ function Content() {
 
 function FinalCTA() {
   return (
-    <section className="bg-primary py-20 text-primary-foreground lg:py-24">
-      <div className="mx-auto max-w-4xl px-5 text-center">
+    <section className="relative overflow-hidden bg-primary py-20 text-primary-foreground lg:py-24">
+      <BrandMark className="pointer-events-none absolute -left-10 top-6 h-40 w-auto opacity-[0.08]" />
+      <BrandMark className="pointer-events-none absolute -right-8 bottom-4 h-56 w-auto opacity-[0.06]" />
+      <div className="relative mx-auto max-w-4xl px-5 text-center">
         <h2 className="text-[28px] font-bold leading-tight sm:text-[38px]">
           Sua empresa está preparada para crescer com mais organização, integração e
           segurança?
@@ -902,23 +922,24 @@ const FOOTER_LINKS = [
 
 function Footer() {
   return (
-    <footer className="border-t border-border bg-muted/60 py-14">
+    <footer className="relative overflow-hidden border-t border-border bg-primary-deep py-14 text-primary-foreground">
+      <BrandMark className="pointer-events-none absolute -bottom-10 right-4 h-52 w-auto opacity-[0.06]" />
       <div className="mx-auto grid max-w-6xl gap-10 px-5 md:grid-cols-[1.2fr_0.8fr_0.8fr]">
         <div>
-          <Logo />
-          <p className="mt-4 text-[13px] font-semibold uppercase tracking-[0.14em] text-primary">
+          <Logo variant="white" />
+          <p className="mt-4 text-[13px] font-semibold uppercase tracking-[0.14em] text-accent">
             Inteligência Operacional Corporativa
           </p>
-          <p className="mt-4 max-w-sm text-[15px] leading-relaxed text-muted-foreground">
+          <p className="mt-4 max-w-sm text-[15px] leading-relaxed text-primary-foreground/75">
             Estruturamos processos, implantamos tecnologia e desenvolvemos indicadores para
             empresas que querem crescer com mais organização, controle e produtividade.
           </p>
-          <p className="mt-5 text-sm font-medium text-foreground">
+          <p className="mt-5 text-sm font-medium text-primary-foreground">
             Uma empresa do Ecossistema Thanks.
           </p>
         </div>
         <div>
-          <p className="text-[12px] font-semibold uppercase tracking-[0.14em] text-foreground">
+          <p className="text-[12px] font-semibold uppercase tracking-[0.14em] text-primary-foreground">
             Navegação
           </p>
           <ul className="mt-4 grid gap-2.5">
@@ -926,7 +947,7 @@ function Footer() {
               <li key={l.label}>
                 <a
                   href={l.href}
-                  className="text-[15px] text-muted-foreground transition-colors hover:text-primary"
+                  className="text-[15px] text-primary-foreground/75 transition-colors hover:text-accent"
                 >
                   {l.label}
                 </a>
@@ -935,16 +956,16 @@ function Footer() {
           </ul>
         </div>
         <div>
-          <p className="text-[12px] font-semibold uppercase tracking-[0.14em] text-foreground">
+          <p className="text-[12px] font-semibold uppercase tracking-[0.14em] text-primary-foreground">
             Contato
           </p>
-          <div className="mt-4 rounded-xl border border-dashed border-primary/25 bg-background p-5 text-sm leading-relaxed text-muted-foreground">
+          <div className="mt-4 rounded-xl border border-dashed border-primary-foreground/30 p-5 text-sm leading-relaxed text-primary-foreground/75">
             Espaço reservado para endereço, telefone, e-mail, CNPJ e redes sociais oficiais.
           </div>
         </div>
       </div>
-      <div className="mx-auto mt-12 max-w-6xl border-t border-border px-5 pt-6">
-        <p className="text-sm text-muted-foreground">
+      <div className="relative mx-auto mt-12 max-w-6xl border-t border-primary-foreground/15 px-5 pt-6">
+        <p className="text-sm text-primary-foreground/70">
           Thanks Up Gestão de Negócios. Todos os direitos reservados.
         </p>
       </div>
