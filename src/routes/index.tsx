@@ -283,7 +283,7 @@ function DashboardMock() {
             <span className="h-2.5 w-2.5 rounded-full bg-violet/40" />
             <span className="h-2.5 w-2.5 rounded-full bg-border" />
           </div>
-          <span className="rounded-full bg-violet-soft px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.14em] text-violet">
+<span className="rounded-full border border-accent/50 bg-accent-soft px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.14em] text-primary-deep">
             Painel gerencial
           </span>
         </div>
@@ -375,10 +375,9 @@ function Hero() {
             Estruturamos processos, implantamos tecnologia e transformamos informações em
             indicadores.
           </p>
-          <div className="mt-6 flex flex-wrap gap-2">
+<div className="mt-6 flex flex-wrap gap-2">
             {["Processos", "Tecnologia", "Indicadores", "Governança"].map((t) => (
               <span key={t} className="chip">
-                <span className="h-1.5 w-1.5 rounded-full bg-accent" />
                 {t}
               </span>
             ))}
