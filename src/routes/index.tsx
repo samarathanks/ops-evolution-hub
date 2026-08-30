@@ -60,19 +60,19 @@ export const Route = createFileRoute("/")({
 });
 
 const NAV = [
-  { label: "Início", href: "#inicio" },
-  { label: "Desafios", href: "#desafios" },
   { label: "Soluções", href: "#solucoes" },
   { label: "Método DNA", href: "#metodo-dna" },
   { label: "Zoho", href: "#zoho" },
   { label: "Por que a Thanks Up", href: "#por-que" },
+  { label: "Conteúdos", href: "#conteudos" },
   { label: "Contato", href: "#contato" },
 ];
+
 
 function Logo({
   variant = "color",
   className = "",
-  sizeClass = "h-9 w-auto sm:h-10",
+  sizeClass = "h-11 w-auto sm:h-12",
 }: {
   variant?: "color" | "white";
   className?: string;
@@ -111,7 +111,7 @@ function Header() {
   const [open, setOpen] = useState(false);
   return (
     <header className="fixed inset-x-0 top-0 z-50 border-b border-border/70 bg-background/90 backdrop-blur">
-      <div className="mx-auto flex h-[72px] max-w-6xl items-center justify-between px-5">
+      <div className="mx-auto flex h-[88px] max-w-6xl items-center justify-between px-5">
         <Logo className="shrink-0" />
         <nav className="hidden items-center gap-7 lg:flex">
           {NAV.map((item) => (
@@ -359,15 +359,15 @@ function DashboardMock() {
 
 function Hero() {
   return (
-    <section id="inicio" className="relative overflow-hidden pt-[72px]">
+    <section id="inicio" className="relative overflow-hidden pt-[88px]">
       <div
         className="pointer-events-none absolute inset-x-0 top-0 h-[70%] bg-violet-soft"
         aria-hidden="true"
       />
-      <div className="relative mx-auto grid max-w-6xl items-center gap-14 px-5 py-16 lg:grid-cols-[1.05fr_0.95fr] lg:gap-16 lg:py-24">
+      <div className="relative mx-auto grid max-w-6xl items-center gap-14 px-5 pb-12 pt-14 lg:grid-cols-[1.05fr_0.95fr] lg:gap-16 lg:pb-16 lg:pt-20">
         <div>
           <Eyebrow>Inteligência Operacional Corporativa</Eyebrow>
-          <h1 className="text-[34px] font-extrabold leading-[1.08] text-foreground sm:text-[52px]">
+          <h1 className="max-w-[16ch] text-[34px] font-extrabold leading-[1.08] text-foreground sm:text-[50px]">
             Organizamos a gestão da sua empresa para que ela cresça com{" "}
             <span className="text-violet">eficiência</span>.
           </h1>
@@ -390,9 +390,12 @@ function Hero() {
               Conheça o Método DNA
             </a>
           </div>
-          <p className="mt-7 border-l-2 border-accent pl-4 text-sm font-semibold uppercase tracking-[0.1em] text-primary-deep">
-            Eficiência corporativa com inteligência estratégica.
-          </p>
+          <div className="mt-8 inline-flex items-center gap-3 rounded-full border border-accent/60 bg-accent-soft px-5 py-2.5">
+            <span className="h-2 w-2 shrink-0 rounded-full bg-accent" aria-hidden="true" />
+            <p className="text-[13px] font-semibold uppercase tracking-[0.12em] text-primary-deep">
+              Eficiência corporativa com inteligência estratégica.
+            </p>
+          </div>
         </div>
         <DashboardMock />
       </div>
@@ -457,7 +460,7 @@ const ICON_TONES: Record<string, string> = {
 
 function Challenges() {
   return (
-    <section id="desafios" className="bg-background py-20 lg:py-28">
+    <section id="desafios" className="bg-background py-16 lg:py-24">
       <div className="mx-auto max-w-6xl px-5">
         <div className="grid gap-8 lg:grid-cols-[0.95fr_1.05fr] lg:items-end">
           <div>
@@ -1003,49 +1006,52 @@ const DIFFS = [
 function WhyUs() {
   return (
     <section id="por-que" className="bg-background py-20 lg:py-28">
-      <div className="mx-auto max-w-6xl px-5">
-        <div className="grid gap-8 lg:grid-cols-[0.9fr_1.1fr] lg:items-end">
-          <div>
-            <Eyebrow>Diferenciais</Eyebrow>
-            <SectionTitle className="text-foreground">
-              Por que conduzir essa transformação com a Thanks Up?
-            </SectionTitle>
-          </div>
-          <Placeholder
-            className="min-h-[120px] lg:min-h-[140px]"
-            label="Espaço reservado para foto real da equipe Thanks Up em ambiente corporativo."
-          />
-        </div>
+      <div className="mx-auto grid max-w-6xl gap-12 px-5 lg:grid-cols-[1.05fr_0.95fr] lg:gap-16">
+        <div>
+          <Eyebrow>Diferenciais</Eyebrow>
+          <SectionTitle className="text-foreground">
+            Por que conduzir essa transformação com a{" "}
+            <span className="text-violet">Thanks Up</span>?
+          </SectionTitle>
 
-        <div className="mt-12 grid gap-5 md:grid-cols-2 lg:grid-cols-3">
-          {DIFFS.map(({ icon: Icon, title, text }, i) => (
-            <div
-              key={title}
-              className={`card-lift rounded-2xl border border-border p-7 ${
-                i === 0 ? "bg-brand-mist" : i === 4 ? "bg-violet-soft" : "bg-card"
-              }`}
-            >
-              <div className="flex items-center justify-between">
-                <span className="flex h-11 w-11 items-center justify-center rounded-xl bg-violet text-primary-foreground">
+          <ul className="mt-10 space-y-1">
+            {DIFFS.map(({ icon: Icon, title, text }, i) => (
+              <li
+                key={title}
+                className="grid grid-cols-[auto_minmax(0,1fr)] gap-5 border-l-2 border-border py-5 pl-6 transition-colors hover:border-accent"
+              >
+                <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-violet-soft text-violet">
                   <Icon size={19} />
                 </span>
-                <span className="text-[24px] font-extrabold text-violet/20">
-                  0{i + 1}
-                </span>
-              </div>
-              <h3 className="mt-5 text-[17px] font-semibold leading-snug text-foreground">
-                {title}
-              </h3>
-              <p className="mt-2 text-[15px] leading-relaxed text-muted-foreground">
-                {text}
-              </p>
-            </div>
-          ))}
-          <div className="flex flex-col justify-center rounded-2xl bg-primary-deep p-7 text-primary-foreground">
-            <p className="text-[18px] font-semibold leading-snug">
+                <div className="min-w-0">
+                  <div className="flex items-baseline gap-3">
+                    <span className="text-[12px] font-bold tracking-widest text-violet/40">
+                      0{i + 1}
+                    </span>
+                    <h3 className="text-[17px] font-semibold leading-snug text-foreground">
+                      {title}
+                    </h3>
+                  </div>
+                  <p className="mt-1.5 text-[15px] leading-relaxed text-muted-foreground">
+                    {text}
+                  </p>
+                </div>
+              </li>
+            ))}
+          </ul>
+        </div>
+
+        <div className="flex flex-col gap-6 lg:sticky lg:top-28 lg:self-start">
+          <Placeholder
+            className="min-h-[260px]"
+            label="Espaço reservado para foto real da equipe Thanks Up em reunião com cliente."
+          />
+          <div className="rounded-2xl bg-primary-deep p-7 text-primary-foreground">
+            <Sparkles size={22} className="text-accent" />
+            <p className="mt-4 text-[18px] font-semibold leading-snug">
               Pessoas próximas da operação e comprometidas com a execução.
             </p>
-            <a href="#contato" className="btn-accent mt-6 self-start">
+            <a href="#contato" className="btn-accent mt-6">
               Falar com a equipe
             </a>
           </div>
@@ -1054,6 +1060,7 @@ function WhyUs() {
     </section>
   );
 }
+
 
 /* ---------------- PERFIL DE CLIENTE ---------------- */
 
@@ -1110,7 +1117,7 @@ const POSTS = [
 
 function Content() {
   return (
-    <section className="bg-background py-20 lg:py-28">
+    <section id="conteudos" className="bg-violet-soft py-20 lg:py-24">
       <div className="mx-auto max-w-6xl px-5">
         <div className="max-w-3xl">
           <Eyebrow>Conteúdos</Eyebrow>
@@ -1368,9 +1375,8 @@ function Index() {
         <Zoho />
         <WhyUs />
         <ClientProfile />
-        <div id="conteudos">
-          <Content />
-        </div>
+        <Content />
+
         <FinalCTA />
         <Contact />
       </main>
