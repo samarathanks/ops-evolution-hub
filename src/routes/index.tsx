@@ -1371,9 +1371,8 @@ function Index() {
         <Zoho />
         <WhyUs />
         <ClientProfile />
-        <div id="conteudos">
-          <Content />
-        </div>
+        <Content />
+
         <FinalCTA />
         <Contact />
       </main>
