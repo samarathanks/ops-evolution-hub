@@ -396,7 +396,7 @@ const SOLUTIONS = [
       "apoio à tomada de decisão",
       "expansão das soluções implantadas",
     ],
-    cta: "Conhecer assessoria",
+    cta: "Conhecer gestão da evolução",
     icon: Gauge,
   },
 ];
@@ -492,14 +492,9 @@ function MethodDNA() {
               Desenvolvimento de Negócios e Ativos
             </p>
             <p className="mt-6 text-[17px] leading-relaxed text-muted-foreground">
-              Cada empresa possui uma realidade própria. Por isso, nossos projetos não
-              começam pela ferramenta ou por uma solução pronta. Começam pela compreensão do
-              negócio.
-            </p>
-            <p className="mt-4 text-[17px] leading-relaxed text-muted-foreground">
-              O Método DNA é a metodologia proprietária da Thanks Up para diagnosticar a
-              operação, estruturar prioridades, implantar melhorias e acompanhar os
-              resultados da transformação.
+              O Método DNA é a metodologia proprietária da Thanks Up para compreender a
+              realidade da empresa, organizar prioridades, estruturar soluções, implantar
+              melhorias e acompanhar a evolução da operação.
             </p>
           </div>
 
@@ -554,12 +549,12 @@ function Zoho() {
         <div>
           <Eyebrow>Tecnologia aplicada à realidade do negócio</Eyebrow>
           <h2 className="text-[28px] font-bold leading-tight text-foreground sm:text-[38px]">
-            Mais do que implantar um CRM, estruturamos a operação que será gerenciada por
-            ele.
+            Implantação e evolução do Zoho CRM e Zoho CRM Plus
           </h2>
           <p className="mt-6 text-[17px] leading-relaxed text-muted-foreground">
-            Como Parceiros Consultores Oficiais Zoho, apoiamos empresas na implantação e
-            evolução do Zoho CRM e do Zoho CRM Plus.
+            Como Parceiros Consultores Oficiais Zoho, apoiamos empresas no diagnóstico do
+            processo comercial, configuração da plataforma, organização e migração de dados,
+            automações, capacitação dos usuários e evolução da operação.
           </p>
           <p className="mt-4 text-[17px] leading-relaxed text-muted-foreground">
             Nosso trabalho começa antes da configuração da plataforma. Primeiro analisamos o
@@ -579,8 +574,8 @@ function Zoho() {
             ))}
           </ul>
           <p className="mt-8 rounded-xl border-l-4 border-accent bg-card px-6 py-5 text-[17px] leading-relaxed text-foreground">
-            O CRM não deve obrigar a empresa a se adaptar a uma ferramenta mal configurada. A
-            tecnologia deve refletir o processo que a empresa precisa executar.
+            Mais do que configurar uma plataforma, estruturamos a operação que será
+            gerenciada por ela.
           </p>
           <a href="#contato" className="btn-primary mt-8">
             Falar sobre Zoho CRM
@@ -605,27 +600,27 @@ const DIFFS = [
   {
     icon: Compass,
     title: "Visão de negócio antes da tecnologia",
-    text: "Não começamos pela ferramenta. Começamos entendendo o problema, o processo e o resultado esperado.",
+    text: "Compreendemos o processo, o problema e o resultado esperado antes de definir a solução.",
   },
   {
     icon: Layers,
-    title: "Consultoria e execução",
-    text: "Não entregamos apenas um relatório. Participamos da implantação das melhorias definidas.",
+    title: "Estruturação e execução",
+    text: "Não entregamos apenas recomendações. Participamos da implantação das melhorias definidas.",
   },
   {
     icon: Gauge,
-    title: "Acompanhamento após o projeto",
-    text: "Apoiamos a adoção, analisamos indicadores e conduzimos a evolução da operação.",
+    title: "Acompanhamento da evolução",
+    text: "Monitoramos adoção, indicadores, resultados e novas oportunidades de melhoria.",
   },
   {
     icon: Settings2,
-    title: "Soluções desenhadas para cada realidade",
-    text: "O projeto respeita o porte, a maturidade, as prioridades e a capacidade de execução da empresa.",
+    title: "Soluções adaptadas à realidade da empresa",
+    text: "Cada projeto respeita a maturidade, as prioridades e a capacidade de execução da organização.",
   },
   {
     icon: Users,
-    title: "Comunicação próxima da liderança",
-    text: "Trabalhamos em conjunto com os responsáveis pelas decisões e com as equipes que executarão os novos processos.",
+    title: "Proximidade com a liderança e as equipes",
+    text: "Trabalhamos com quem decide e com quem executará os novos processos no dia a dia.",
   },
 ];
 
