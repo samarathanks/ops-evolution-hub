@@ -332,9 +332,9 @@ function ValueProposition() {
 const SOLUTIONS = [
   {
     code: "TU001",
-    name: "Diagnóstico Estratégico Empresarial",
+    name: "Diagnóstico Operacional Empresarial",
     benefit: "Descubra onde sua empresa pode evoluir.",
-    text: "Analisamos a operação, identificamos gargalos, riscos e oportunidades e construímos uma visão clara das prioridades do negócio.",
+    text: "Analisamos a operação, identificamos gargalos, riscos e oportunidades e organizamos as prioridades para a evolução do negócio.",
     items: [
       "levantamento do cenário atual",
       "análise dos processos",
@@ -349,8 +349,8 @@ const SOLUTIONS = [
   {
     code: "TU002",
     name: "Estruturação de Processos e Governança",
-    benefit: "Organize a operação para crescer com mais controle.",
-    text: "Mapeamos e estruturamos processos, responsabilidades, fluxos de decisão e formas de acompanhamento para construir uma gestão mais organizada e previsível.",
+    benefit: "Organize sua operação para crescer com mais controle.",
+    text: "Mapeamos e estruturamos processos, responsabilidades, fluxos de decisão e formas de acompanhamento para tornar a gestão mais organizada e previsível.",
     items: [
       "mapeamento de processos",
       "definição de responsabilidades",
@@ -365,9 +365,9 @@ const SOLUTIONS = [
   },
   {
     code: "TU003",
-    name: "Transformação Digital Empresarial",
+    name: "Implantação e Transformação Digital",
     benefit: "Integre pessoas, processos e tecnologia em uma única operação.",
-    text: "Implantamos tecnologia a partir da realidade da empresa, conectando processos, áreas e informações para reduzir atividades manuais e aumentar o controle da gestão.",
+    text: "Implantamos soluções tecnológicas alinhadas à realidade da empresa, conectando áreas, informações e processos para aumentar produtividade e controle.",
     items: [
       "desenho da solução",
       "implantação e configuração",
@@ -383,9 +383,9 @@ const SOLUTIONS = [
   },
   {
     code: "TU004",
-    name: "Assessoria Estratégica em Gestão",
+    name: "Gestão da Evolução Operacional",
     benefit: "Tenha indicadores em tempo real para tomar decisões com segurança.",
-    text: "Acompanhamos a evolução da operação, analisamos resultados e apoiamos a liderança na priorização e implantação de novas melhorias.",
+    text: "Acompanhamos indicadores, adoção, resultados e oportunidades de melhoria para apoiar a liderança e manter a operação em evolução contínua.",
     items: [
       "reuniões periódicas",
       "acompanhamento de indicadores",
