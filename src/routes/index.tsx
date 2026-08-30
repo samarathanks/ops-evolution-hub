@@ -2,28 +2,36 @@ import { createFileRoute } from "@tanstack/react-router";
 import logoColor from "../assets/thanksup-logo.png.asset.json";
 import logoWhite from "../assets/thanksup-logo-branco.png.asset.json";
 import brandSymbol from "../assets/thanksup-simbolo.png.asset.json";
-import { useState, type FormEvent } from "react";
+import { useState, type FormEvent, type ReactNode } from "react";
 import {
+  Activity,
   ArrowRight,
+  ArrowUpRight,
   BarChart3,
   Boxes,
   Check,
   CheckCircle2,
+  ChevronDown,
   Compass,
   Database,
+  Filter,
   Gauge,
-  
   Image as ImageIcon,
   Layers,
+  LineChart,
   Menu,
+  Minus,
+  Plus,
   Repeat,
   Settings2,
+  Share2,
   Sparkles,
   Target,
   TrendingUp,
   Users,
   Workflow,
   X,
+  Zap,
 } from "lucide-react";
 
 export const Route = createFileRoute("/")({
@@ -81,13 +89,10 @@ function Logo({
         src={white ? logoWhite.url : logoColor.url}
         alt="Thanks Up Gestão de Negócios"
         className={sizeClass}
-        width={white ? 1204 : 1400}
-        height={white ? 263 : 306}
       />
     </a>
   );
 }
-
 
 function BrandMark({ className = "" }: { className?: string }) {
   return (
@@ -113,14 +118,14 @@ function Header() {
             <a
               key={item.href}
               href={item.href}
-              className="text-[15px] text-muted-foreground transition-colors hover:text-primary"
+              className="text-[15px] text-muted-foreground transition-colors hover:text-violet"
             >
               {item.label}
             </a>
           ))}
         </nav>
         <div className="hidden lg:block">
-          <a href="#contato" className="btn-primary">
+          <a href="#contato" className="btn-violet">
             Solicitar diagnóstico
           </a>
         </div>
@@ -149,7 +154,7 @@ function Header() {
             <a
               href="#contato"
               onClick={() => setOpen(false)}
-              className="btn-primary mt-2 justify-center"
+              className="btn-violet mt-2 justify-center"
             >
               Solicitar diagnóstico
             </a>
@@ -160,12 +165,83 @@ function Header() {
   );
 }
 
-function Eyebrow({ children }: { children: string }) {
+function Eyebrow({
+  children,
+  tone = "default",
+}: {
+  children: string;
+  tone?: "default" | "inverse";
+}) {
   return (
-    <p className="mb-4 flex items-center gap-3 text-[12px] font-semibold uppercase tracking-[0.18em] text-primary">
+    <p
+      className={`mb-4 flex items-center gap-3 text-[12px] font-semibold uppercase tracking-[0.18em] ${
+        tone === "inverse" ? "text-accent" : "text-violet"
+      }`}
+    >
       <span className="brand-rule" aria-hidden="true" />
       {children}
     </p>
+  );
+}
+
+function SectionTitle({
+  children,
+  className = "",
+}: {
+  children: ReactNode;
+  className?: string;
+}) {
+  return (
+    <h2
+      className={`text-[28px] font-bold leading-[1.15] sm:text-[38px] ${className}`}
+    >
+      {children}
+    </h2>
+  );
+}
+
+function Accordion({
+  title,
+  children,
+  tone = "light",
+}: {
+  title: string;
+  children: ReactNode;
+  tone?: "light" | "dark";
+}) {
+  const [open, setOpen] = useState(false);
+  const dark = tone === "dark";
+  return (
+    <div
+      className={`rounded-xl border ${
+        dark ? "border-primary-foreground/20" : "border-border bg-card"
+      }`}
+    >
+      <button
+        type="button"
+        onClick={() => setOpen((v) => !v)}
+        aria-expanded={open}
+        className={`flex w-full items-center justify-between gap-4 px-5 py-4 text-left text-[15px] font-semibold ${
+          dark ? "text-primary-foreground" : "text-foreground"
+        }`}
+      >
+        <span>{title}</span>
+        {open ? (
+          <Minus size={18} className="shrink-0 text-accent" />
+        ) : (
+          <Plus size={18} className="shrink-0 text-accent" />
+        )}
+      </button>
+      {open && (
+        <div
+          className={`px-5 pb-5 text-[15px] leading-relaxed ${
+            dark ? "text-primary-foreground/80" : "text-muted-foreground"
+          }`}
+        >
+          {children}
+        </div>
+      )}
+    </div>
   );
 }
 
@@ -175,7 +251,7 @@ function Placeholder({ label, className = "" }: { label: string; className?: str
       className={`relative flex flex-col items-center justify-center gap-3 overflow-hidden rounded-xl border border-dashed border-secondary bg-primary-soft p-8 text-center ${className}`}
     >
       <BrandMark className="pointer-events-none absolute -right-6 -top-6 h-24 w-auto opacity-[0.07]" />
-      <span className="flex h-11 w-11 items-center justify-center rounded-full bg-background text-primary shadow-sm">
+      <span className="flex h-11 w-11 items-center justify-center rounded-full bg-background text-violet shadow-sm">
         <ImageIcon size={20} />
       </span>
       <p className="max-w-sm text-sm leading-relaxed text-muted-foreground">{label}</p>
@@ -183,188 +259,360 @@ function Placeholder({ label, className = "" }: { label: string; className?: str
   );
 }
 
+/* ---------------- HERO ---------------- */
+
+const HERO_KPIS = [
+  { label: "Processos", value: "Padronizados", icon: Workflow },
+  { label: "Dados", value: "Integrados", icon: Database },
+  { label: "Indicadores", value: "Em tempo real", icon: LineChart },
+];
+
+const HERO_BARS = [38, 52, 46, 68, 74, 88];
+
+function DashboardMock() {
+  return (
+    <div className="relative">
+      <div
+        className="grid-dots pointer-events-none absolute -right-4 -top-6 h-32 w-32 rounded-xl opacity-60"
+        aria-hidden="true"
+      />
+      <div className="relative overflow-hidden rounded-2xl border border-border bg-card p-5 shadow-[0_30px_70px_-45px_oklch(0.42_0.17_295/0.7)] sm:p-6">
+        <div className="flex items-center justify-between">
+          <div className="flex items-center gap-2">
+            <span className="h-2.5 w-2.5 rounded-full bg-accent" />
+            <span className="h-2.5 w-2.5 rounded-full bg-violet/40" />
+            <span className="h-2.5 w-2.5 rounded-full bg-border" />
+          </div>
+          <span className="rounded-full bg-violet-soft px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.14em] text-violet">
+            Painel gerencial
+          </span>
+        </div>
+
+        <div className="mt-5 grid grid-cols-3 gap-3">
+          {HERO_KPIS.map(({ label, value, icon: Icon }) => (
+            <div key={label} className="rounded-xl bg-muted p-3">
+              <Icon size={16} className="text-violet" />
+              <p className="mt-2 text-[10px] font-semibold uppercase tracking-[0.12em] text-muted-foreground">
+                {label}
+              </p>
+              <p className="text-[12px] font-semibold leading-tight text-foreground">
+                {value}
+              </p>
+            </div>
+          ))}
+        </div>
+
+        <div className="mt-4 rounded-xl border border-border p-4">
+          <div className="flex items-center justify-between">
+            <p className="text-[12px] font-semibold text-foreground">
+              Evolução operacional
+            </p>
+            <TrendingUp size={15} className="text-accent" />
+          </div>
+          <div className="mt-4 flex h-24 items-end gap-2">
+            {HERO_BARS.map((h, i) => (
+              <div
+                key={i}
+                style={{ height: `${h}%` }}
+                className={`flex-1 rounded-t-md ${
+                  i === HERO_BARS.length - 1
+                    ? "bg-accent"
+                    : i > 2
+                      ? "bg-violet"
+                      : "bg-violet/30"
+                }`}
+              />
+            ))}
+          </div>
+        </div>
+
+        <div className="mt-4 grid grid-cols-2 gap-3">
+          <div className="rounded-xl bg-violet p-4 text-primary-foreground">
+            <Share2 size={16} />
+            <p className="mt-2 text-[12px] leading-snug opacity-90">
+              Áreas conectadas em uma única operação
+            </p>
+          </div>
+          <div className="rounded-xl bg-brand-mist p-4">
+            <Gauge size={16} className="text-primary-deep" />
+            <p className="mt-2 text-[12px] leading-snug text-primary-deep">
+              Decisões apoiadas por indicadores
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <div className="absolute -bottom-6 -left-4 hidden w-52 rounded-xl border border-border bg-card p-4 shadow-[0_20px_45px_-30px_oklch(0.31_0.015_252/0.8)] sm:block">
+        <div className="flex items-center gap-2">
+          <span className="flex h-8 w-8 items-center justify-center rounded-lg bg-accent text-accent-foreground">
+            <Zap size={15} />
+          </span>
+          <p className="text-[12px] font-semibold text-foreground">Automações ativas</p>
+        </div>
+        <div className="mt-3 h-1.5 w-full rounded-full bg-muted">
+          <div className="h-1.5 w-4/5 rounded-full bg-violet" />
+        </div>
+      </div>
+    </div>
+  );
+}
+
 function Hero() {
   return (
-    <section id="inicio" className="pt-[72px]">
-      <div className="mx-auto grid max-w-6xl items-center gap-12 px-5 py-16 lg:grid-cols-2 lg:gap-16 lg:py-28">
+    <section id="inicio" className="relative overflow-hidden pt-[72px]">
+      <div
+        className="pointer-events-none absolute inset-x-0 top-0 h-[70%] bg-violet-soft"
+        aria-hidden="true"
+      />
+      <div className="relative mx-auto grid max-w-6xl items-center gap-14 px-5 py-16 lg:grid-cols-[1.05fr_0.95fr] lg:gap-16 lg:py-24">
         <div>
           <Eyebrow>Inteligência Operacional Corporativa</Eyebrow>
-          <h1 className="text-[34px] font-extrabold leading-[1.12] text-foreground sm:text-5xl">
+          <h1 className="text-[34px] font-extrabold leading-[1.08] text-foreground sm:text-[52px]">
             Organizamos a gestão da sua empresa para que ela cresça com{" "}
-            <span className="text-primary">eficiência</span>.
+            <span className="text-violet">eficiência</span>.
           </h1>
-          <p className="mt-6 max-w-xl text-[17px] leading-relaxed text-muted-foreground">
+          <p className="mt-6 max-w-lg text-[17px] leading-relaxed text-muted-foreground">
             Estruturamos processos, implantamos tecnologia e transformamos informações em
-            indicadores para construir operações mais organizadas, integradas e preparadas
-            para crescer.
+            indicadores.
           </p>
+          <div className="mt-6 flex flex-wrap gap-2">
+            {["Processos", "Tecnologia", "Indicadores", "Governança"].map((t) => (
+              <span key={t} className="chip">
+                <span className="h-1.5 w-1.5 rounded-full bg-accent" />
+                {t}
+              </span>
+            ))}
+          </div>
           <div className="mt-8 flex flex-col gap-3 sm:flex-row">
-            <a href="#contato" className="btn-primary justify-center">
-              Solicitar diagnóstico
+            <a href="#contato" className="btn-violet justify-center">
+              Solicitar diagnóstico <ArrowRight size={16} />
             </a>
             <a href="#metodo-dna" className="btn-outline justify-center">
               Conheça o Método DNA
             </a>
           </div>
-          <p className="mt-7 border-l-2 border-accent pl-4 text-sm font-medium leading-relaxed text-muted-foreground">
+          <p className="mt-7 border-l-2 border-accent pl-4 text-sm font-semibold uppercase tracking-[0.1em] text-primary-deep">
             Eficiência corporativa com inteligência estratégica.
           </p>
         </div>
-        <Placeholder
-          className="min-h-[340px] lg:min-h-[420px]"
-          label="Espaço reservado para foto ou vídeo real da equipe em reunião, diagnóstico ou apresentação de projeto."
-        />
+        <DashboardMock />
       </div>
     </section>
   );
 }
+
+/* ---------------- DESAFIOS ---------------- */
 
 const CHALLENGES = [
   {
     icon: Workflow,
     title: "Processos diferentes em cada área",
-    text: "Cada equipe executa as atividades de uma forma, dificultando o controle e a padronização.",
+    text: "Cada equipe executa de um jeito. O controle e a padronização ficam difíceis.",
+    tone: "violet",
   },
   {
     icon: Database,
     title: "Informações espalhadas",
-    text: "Dados importantes estão distribuídos entre planilhas, mensagens, e-mails e sistemas que não se comunicam.",
+    text: "Planilhas, mensagens, e-mails e sistemas que não conversam entre si.",
+    tone: "plain",
   },
   {
     icon: BarChart3,
-    title: "Falta de indicadores confiáveis",
-    text: "A liderança não consegue acompanhar resultados em tempo real ou depende da consolidação manual das informações.",
+    title: "Indicadores pouco confiáveis",
+    text: "A liderança depende de consolidação manual para enxergar resultados.",
+    tone: "mist",
   },
   {
     icon: Repeat,
     title: "Retrabalho e baixa produtividade",
-    text: "Atividades repetitivas, aprovações demoradas e tarefas manuais consomem tempo da equipe.",
+    text: "Tarefas repetitivas e aprovações lentas consomem o tempo da equipe.",
+    tone: "plain",
   },
   {
     icon: Settings2,
     title: "Tecnologia mal aproveitada",
-    text: "A empresa possui ferramentas, mas elas não estão configuradas de acordo com os processos reais da operação.",
+    text: "As ferramentas existem, mas não refletem os processos reais da operação.",
+    tone: "accent",
   },
   {
     icon: TrendingUp,
     title: "Crescimento sem previsibilidade",
-    text: "A empresa cresce, mas não possui estrutura, processos e indicadores suficientes para sustentar a expansão.",
+    text: "A empresa cresce sem estrutura e sem indicadores para sustentar a expansão.",
+    tone: "plain",
   },
 ];
 
+const TONES: Record<string, string> = {
+  violet: "bg-violet text-primary-foreground border-transparent",
+  mist: "bg-brand-mist text-primary-deep border-transparent",
+  accent: "bg-accent-soft text-foreground border-transparent",
+  plain: "bg-card text-foreground border-border",
+};
+
+const ICON_TONES: Record<string, string> = {
+  violet: "bg-primary-foreground/15 text-primary-foreground",
+  mist: "bg-background text-violet",
+  accent: "bg-accent text-accent-foreground",
+  plain: "bg-violet-soft text-violet",
+};
+
 function Challenges() {
   return (
-    <section id="desafios" className="bg-muted/60 py-20 lg:py-28">
+    <section id="desafios" className="bg-background py-20 lg:py-28">
       <div className="mx-auto max-w-6xl px-5">
-        <div className="max-w-3xl">
-          <Eyebrow>Desafios</Eyebrow>
-          <h2 className="text-[28px] font-bold leading-tight text-foreground sm:text-[38px]">
-            Sua empresa cresceu. A gestão conseguiu acompanhar?
-          </h2>
-          <p className="mt-5 text-[17px] leading-relaxed text-muted-foreground">
-            O crescimento costuma revelar problemas que antes permaneciam escondidos.
-            Processos deixam de acompanhar o ritmo da operação, informações ficam
-            espalhadas, decisões dependem de planilhas e as equipes passam a trabalhar mais
-            sem necessariamente produzir melhor.
+        <div className="grid gap-8 lg:grid-cols-[0.95fr_1.05fr] lg:items-end">
+          <div>
+            <Eyebrow>Desafios</Eyebrow>
+            <SectionTitle className="text-foreground">
+              Sua empresa cresceu.
+              <br />
+              <span className="text-violet">A gestão conseguiu acompanhar?</span>
+            </SectionTitle>
+          </div>
+          <p className="text-[16px] leading-relaxed text-muted-foreground lg:pb-2">
+            O crescimento revela o que estava escondido: processos fora de ritmo,
+            informações dispersas e decisões dependentes de planilhas.
           </p>
         </div>
+
         <div className="mt-12 grid gap-5 md:grid-cols-2 lg:grid-cols-3">
-          {CHALLENGES.map(({ icon: Icon, title, text }) => (
+          {CHALLENGES.map(({ icon: Icon, title, text, tone }, i) => (
             <article
               key={title}
-              className="rounded-xl border border-border bg-card p-7 transition-shadow hover:shadow-[0_14px_40px_-26px_oklch(0.31_0.015_252/0.55)]"
+              className={`card-lift relative overflow-hidden rounded-2xl border p-7 ${TONES[tone]}`}
             >
-              <span className="flex h-11 w-11 items-center justify-center rounded-lg bg-primary-soft text-primary">
+              <span className="absolute right-5 top-5 text-[12px] font-bold tracking-widest opacity-40">
+                0{i + 1}
+              </span>
+              <span
+                className={`flex h-11 w-11 items-center justify-center rounded-xl ${ICON_TONES[tone]}`}
+              >
                 <Icon size={20} />
               </span>
-              <h3 className="mt-5 text-[17px] font-semibold text-foreground">{title}</h3>
-              <p className="mt-2.5 text-[15px] leading-relaxed text-muted-foreground">
+              <h3 className="mt-5 text-[17px] font-semibold leading-snug">{title}</h3>
+              <p
+                className={`mt-2.5 text-[15px] leading-relaxed ${
+                  tone === "violet" ? "opacity-85" : "text-muted-foreground"
+                }`}
+              >
                 {text}
               </p>
             </article>
           ))}
         </div>
-        <p className="mt-12 rounded-xl border-l-4 border-accent bg-card px-7 py-6 text-[18px] font-medium leading-relaxed text-foreground sm:text-[20px]">
-          Tecnologia sem processo não organiza uma empresa. Apenas acelera o que já está
-          desorganizado.
-        </p>
+
+        <div className="mt-10 flex flex-col gap-4 rounded-2xl bg-primary-deep px-7 py-8 text-primary-foreground sm:flex-row sm:items-center sm:gap-8">
+          <Sparkles size={28} className="shrink-0 text-accent" />
+          <p className="text-[19px] font-semibold leading-snug sm:text-[22px]">
+            Tecnologia sem processo não organiza uma empresa.
+            <span className="text-accent"> Apenas acelera a desorganização.</span>
+          </p>
+        </div>
       </div>
     </section>
   );
 }
+
+/* ---------------- MODELO DE ATUAÇÃO ---------------- */
 
 const VALUE_STEPS = [
   {
     icon: Compass,
     title: "Diagnóstico",
-    text: "Compreendemos o cenário atual, os gargalos, os objetivos e as prioridades da empresa.",
+    short: "Entender o cenário",
+    text: "Cenário atual, gargalos, objetivos e prioridades da empresa.",
   },
   {
     icon: Layers,
     title: "Estruturação",
-    text: "Desenhamos processos, responsabilidades, fluxos, indicadores e o plano de evolução da operação.",
+    short: "Definir o caminho",
+    text: "Processos, responsabilidades, fluxos, indicadores e plano de evolução.",
   },
   {
     icon: Settings2,
     title: "Implantação",
-    text: "Colocamos processos, tecnologia, automações e indicadores em funcionamento, capacitando as equipes envolvidas.",
+    short: "Transformar a operação",
+    text: "Processos, tecnologia e automações em funcionamento, com equipes capacitadas.",
   },
   {
     icon: Gauge,
     title: "Acompanhamento",
-    text: "Monitoramos a adoção, os resultados e as oportunidades de melhoria contínua.",
+    short: "Sustentar a evolução",
+    text: "Monitoramento da adoção, dos resultados e da melhoria contínua.",
   },
 ];
 
+const STEP_BG = ["bg-violet/25", "bg-violet/50", "bg-violet/75", "bg-violet"];
+
 function ValueProposition() {
   return (
-    <section className="py-20 lg:py-28">
+    <section className="bg-muted/60 py-20 lg:py-28">
       <div className="mx-auto max-w-6xl px-5">
         <div className="max-w-3xl">
           <Eyebrow>Como atuamos</Eyebrow>
-          <h2 className="text-[28px] font-bold leading-tight text-foreground sm:text-[38px]">
-            Não entregamos apenas recomendações. Desenvolvemos e implantamos soluções para
-            transformar a operação.
-          </h2>
-          <p className="mt-5 text-[17px] leading-relaxed text-muted-foreground">
-            A Thanks Up atua desde a compreensão do cenário até a implantação e o
-            acompanhamento das melhorias. Estruturamos processos, conectamos tecnologia,
-            organizamos indicadores e apoiamos a evolução da gestão.
+          <SectionTitle className="text-foreground">
+            Não entregamos apenas recomendações.
+            <span className="text-violet"> Implantamos a transformação.</span>
+          </SectionTitle>
+          <p className="mt-5 text-[16px] leading-relaxed text-muted-foreground">
+            Da compreensão do cenário ao acompanhamento das melhorias.
           </p>
         </div>
-        <div className="mt-14 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
-          {VALUE_STEPS.map(({ icon: Icon, title, text }, i) => (
-            <div key={title} className="relative rounded-xl bg-muted/70 p-7">
-              <div className="flex items-center gap-3">
-                <span className="flex h-11 w-11 items-center justify-center rounded-lg bg-primary text-primary-foreground">
-                  <Icon size={20} />
-                </span>
-                <span className="text-sm font-semibold text-primary">
-                  0{i + 1}
-                </span>
-              </div>
-              <h3 className="mt-5 text-lg font-semibold text-foreground">{title}</h3>
-              <p className="mt-2.5 text-[15px] leading-relaxed text-muted-foreground">
-                {text}
-              </p>
-            </div>
-          ))}
+
+        <div className="relative mt-14">
+          <div
+            className="absolute left-0 right-0 top-6 hidden h-px bg-border lg:block"
+            aria-hidden="true"
+          />
+          <ol className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+            {VALUE_STEPS.map(({ icon: Icon, title, short, text }, i) => (
+              <li key={title} className="relative">
+                <div className="flex items-center gap-3">
+                  <span
+                    className={`relative z-10 flex h-12 w-12 items-center justify-center rounded-full text-primary-foreground ${STEP_BG[i]}`}
+                  >
+                    <Icon size={20} />
+                  </span>
+                  <span className="text-[26px] font-extrabold text-violet/25">
+                    0{i + 1}
+                  </span>
+                </div>
+                <h3 className="mt-5 text-lg font-bold text-foreground">{title}</h3>
+                <p className="mt-1 text-[13px] font-semibold uppercase tracking-[0.1em] text-accent-foreground/70">
+                  {short}
+                </p>
+                <p className="mt-3 text-[15px] leading-relaxed text-muted-foreground">
+                  {text}
+                </p>
+              </li>
+            ))}
+          </ol>
         </div>
-        <p className="mx-auto mt-12 max-w-3xl text-center text-[17px] leading-relaxed text-foreground">
-          O diagnóstico revela as prioridades. A estruturação define o caminho. A
-          implantação transforma a operação. O acompanhamento sustenta a evolução.
+
+        <p className="mt-14 grid gap-3 text-[16px] font-medium leading-snug text-foreground sm:grid-cols-2 lg:grid-cols-4">
+          {[
+            "O diagnóstico revela as prioridades.",
+            "A estruturação define o caminho.",
+            "A implantação transforma a operação.",
+            "O acompanhamento sustenta a evolução.",
+          ].map((s) => (
+            <span key={s} className="border-t-2 border-accent pt-3">
+              {s}
+            </span>
+          ))}
         </p>
       </div>
     </section>
   );
 }
 
+/* ---------------- SOLUÇÕES ---------------- */
+
 const SOLUTIONS = [
   {
-    code: "TU001",
     name: "Diagnóstico Operacional Empresarial",
     benefit: "Descubra onde sua empresa pode evoluir.",
-    text: "Analisamos a operação, identificamos gargalos, riscos e oportunidades e organizamos as prioridades para a evolução do negócio.",
+    text: "Analisamos a operação, identificamos gargalos e organizamos as prioridades do negócio.",
     items: [
       "levantamento do cenário atual",
       "análise dos processos",
@@ -377,10 +625,9 @@ const SOLUTIONS = [
     icon: Target,
   },
   {
-    code: "TU002",
     name: "Estruturação de Processos e Governança",
     benefit: "Organize sua operação para crescer com mais controle.",
-    text: "Mapeamos e estruturamos processos, responsabilidades, fluxos de decisão e formas de acompanhamento para tornar a gestão mais organizada e previsível.",
+    text: "Mapeamos processos, responsabilidades e formas de acompanhamento para uma gestão previsível.",
     items: [
       "mapeamento de processos",
       "definição de responsabilidades",
@@ -394,10 +641,9 @@ const SOLUTIONS = [
     icon: Boxes,
   },
   {
-    code: "TU003",
     name: "Implantação e Transformação Digital",
     benefit: "Integre pessoas, processos e tecnologia em uma única operação.",
-    text: "Implantamos soluções tecnológicas alinhadas à realidade da empresa, conectando áreas, informações e processos para aumentar produtividade e controle.",
+    text: "Implantamos soluções alinhadas à realidade da empresa, conectando áreas e informações.",
     items: [
       "desenho da solução",
       "implantação e configuração",
@@ -412,10 +658,9 @@ const SOLUTIONS = [
     icon: Sparkles,
   },
   {
-    code: "TU004",
     name: "Gestão da Evolução Operacional",
-    benefit: "Tenha indicadores em tempo real para tomar decisões com segurança.",
-    text: "Acompanhamos indicadores, adoção, resultados e oportunidades de melhoria para apoiar a liderança e manter a operação em evolução contínua.",
+    benefit: "Tenha indicadores em tempo real para decidir com segurança.",
+    text: "Acompanhamos indicadores, adoção e oportunidades de melhoria para apoiar a liderança.",
     items: [
       "reuniões periódicas",
       "acompanhamento de indicadores",
@@ -431,53 +676,76 @@ const SOLUTIONS = [
   },
 ];
 
+function SolutionCard({
+  solution,
+}: {
+  solution: (typeof SOLUTIONS)[number];
+}) {
+  const [open, setOpen] = useState(false);
+  const { icon: Icon } = solution;
+  const visible = open ? solution.items : solution.items.slice(0, 4);
+  const rest = solution.items.length - 4;
+
+  return (
+    <article className="card-lift flex flex-col rounded-2xl border border-border bg-card p-7 lg:p-8">
+      <span className="flex h-12 w-12 items-center justify-center rounded-xl bg-violet text-primary-foreground">
+        <Icon size={22} />
+      </span>
+      <h3 className="mt-6 text-xl font-bold leading-snug text-foreground">
+        {solution.name}
+      </h3>
+      <p className="mt-2 text-[15px] font-semibold text-violet">{solution.benefit}</p>
+      <p className="mt-3 text-[15px] leading-relaxed text-muted-foreground">
+        {solution.text}
+      </p>
+
+      <ul className="mt-6 grid gap-2">
+        {visible.map((item) => (
+          <li key={item} className="flex gap-2 text-[14px] text-foreground/85">
+            <Check size={16} className="mt-0.5 shrink-0 text-accent" />
+            <span>{item}</span>
+          </li>
+        ))}
+      </ul>
+
+      {rest > 0 && (
+        <button
+          type="button"
+          onClick={() => setOpen((v) => !v)}
+          aria-expanded={open}
+          className="btn-ghost mt-4 self-start text-violet"
+        >
+          {open ? "Ver menos" : `Ver detalhes (+${rest})`}
+          <ChevronDown
+            size={16}
+            className={`transition-transform ${open ? "rotate-180" : ""}`}
+          />
+        </button>
+      )}
+
+      <a href="#contato" className="btn-outline mt-7 self-start">
+        {solution.cta} <ArrowUpRight size={16} />
+      </a>
+    </article>
+  );
+}
+
 function Solutions() {
   return (
-    <section id="solucoes" className="bg-muted/60 py-20 lg:py-28">
+    <section id="solucoes" className="bg-background py-20 lg:py-28">
       <div className="mx-auto max-w-6xl px-5">
         <div className="max-w-3xl">
           <Eyebrow>Portfólio</Eyebrow>
-          <h2 className="text-[28px] font-bold leading-tight text-foreground sm:text-[38px]">
+          <SectionTitle className="text-foreground">
             Soluções para cada etapa da transformação
-          </h2>
-          <p className="mt-5 text-[17px] leading-relaxed text-muted-foreground">
+          </SectionTitle>
+          <p className="mt-5 text-[16px] leading-relaxed text-muted-foreground">
             Um portfólio enxuto, conectado e orientado pelos desafios reais da empresa.
           </p>
         </div>
         <div className="mt-12 grid gap-6 lg:grid-cols-2">
-          {SOLUTIONS.map(({ icon: Icon, ...s }) => (
-            <article
-              key={s.code}
-              className="flex flex-col rounded-xl border border-border bg-card p-7 lg:p-9"
-            >
-              <div className="flex items-start justify-between gap-4">
-                <span className="flex h-11 w-11 items-center justify-center rounded-lg bg-primary-soft text-primary">
-                  <Icon size={20} />
-                </span>
-                <span className="rounded-full border border-border px-2.5 py-1 text-[11px] font-semibold tracking-wider text-muted-foreground">
-                  {s.code}
-                </span>
-              </div>
-              <h3 className="mt-6 text-xl font-bold text-foreground">{s.name}</h3>
-              <p className="mt-2 text-[15px] font-semibold text-primary">{s.benefit}</p>
-              <p className="mt-3 text-[15px] leading-relaxed text-muted-foreground">
-                {s.text}
-              </p>
-              <p className="mt-6 text-[12px] font-semibold uppercase tracking-[0.14em] text-muted-foreground">
-                Principais entregas
-              </p>
-              <ul className="mt-3 grid gap-2 sm:grid-cols-2">
-                {s.items.map((item) => (
-                  <li key={item} className="flex gap-2 text-[14px] text-foreground/85">
-                    <Check size={16} className="mt-0.5 shrink-0 text-primary" />
-                    <span>{item}</span>
-                  </li>
-                ))}
-              </ul>
-              <a href="#contato" className="btn-ghost mt-7 self-start">
-                {s.cta} <ArrowRight size={16} />
-              </a>
-            </article>
+          {SOLUTIONS.map((s) => (
+            <SolutionCard key={s.name} solution={s} />
           ))}
         </div>
       </div>
@@ -485,74 +753,91 @@ function Solutions() {
   );
 }
 
+/* ---------------- MÉTODO DNA ---------------- */
+
 const DNA_STEPS = [
   {
     title: "Diagnóstico",
-    text: "Compreendemos o cenário atual, os objetivos, os gargalos e as prioridades da empresa.",
+    short: "Compreender",
+    text: "Cenário atual, objetivos, gargalos e prioridades.",
   },
   {
     title: "Mapeamento",
-    text: "Analisamos processos, responsabilidades, informações, sistemas e indicadores.",
+    short: "Analisar",
+    text: "Processos, responsabilidades, informações, sistemas e indicadores.",
   },
   {
     title: "Direcionamento",
-    text: "Construímos o plano de transformação, definindo prioridades, escopo, responsáveis e etapas.",
+    short: "Planejar",
+    text: "Plano de transformação com prioridades, escopo, responsáveis e etapas.",
   },
   {
     title: "Implantação",
-    text: "Colocamos as melhorias em prática por meio de processos, tecnologia, capacitação e acompanhamento.",
+    short: "Executar",
+    text: "Melhorias em prática: processos, tecnologia e capacitação.",
   },
   {
     title: "Evolução",
-    text: "Monitoramos os resultados, corrigimos desvios e identificamos novas oportunidades de melhoria.",
+    short: "Sustentar",
+    text: "Resultados monitorados, desvios corrigidos e novas oportunidades.",
   },
 ];
 
 function MethodDNA() {
   return (
-    <section id="metodo-dna" className="py-20 lg:py-28">
-      <div className="mx-auto max-w-6xl px-5">
-        <div className="relative overflow-hidden rounded-2xl border border-border bg-card p-8 sm:p-12 lg:p-16">
-          <BrandMark className="pointer-events-none absolute -right-10 -top-10 h-44 w-auto opacity-[0.05]" />
-          <div className="relative max-w-3xl">
-            <Eyebrow>Metodologia proprietária</Eyebrow>
-            <h2 className="text-[30px] font-extrabold leading-tight text-foreground sm:text-[42px]">
+    <section
+      id="metodo-dna"
+      className="relative overflow-hidden bg-violet-deep py-20 text-primary-foreground lg:py-28"
+    >
+      <BrandMark className="pointer-events-none absolute -right-12 -top-12 h-64 w-auto opacity-[0.07]" />
+      <div
+        className="grid-dots pointer-events-none absolute bottom-8 left-6 h-40 w-40 opacity-20"
+        aria-hidden="true"
+      />
+      <div className="relative mx-auto max-w-6xl px-5">
+        <div className="grid gap-8 lg:grid-cols-[0.9fr_1.1fr] lg:items-end">
+          <div>
+            <Eyebrow tone="inverse">Metodologia proprietária</Eyebrow>
+            <h2 className="text-[36px] font-extrabold leading-[1.05] sm:text-[52px]">
               Método DNA
             </h2>
-            <p className="mt-2 text-[17px] font-semibold text-primary">
+            <p className="mt-2 text-[17px] font-semibold text-accent">
               Desenvolvimento de Negócios e Ativos
             </p>
-            <p className="mt-6 text-[17px] leading-relaxed text-muted-foreground">
-              O Método DNA é a metodologia proprietária da Thanks Up para compreender a
-              realidade da empresa, organizar prioridades, estruturar soluções, implantar
-              melhorias e acompanhar a evolução da operação.
-            </p>
           </div>
-
-          <ol className="mt-12 grid gap-5 md:grid-cols-3 lg:grid-cols-5">
-            {DNA_STEPS.map((step, i) => (
-              <li
-                key={step.title}
-                className="relative rounded-xl border border-border bg-background p-6"
-              >
-                <span className="flex h-9 w-9 items-center justify-center rounded-full bg-accent text-[13px] font-bold text-accent-foreground">
-                  {i + 1}
-                </span>
-                <h3 className="mt-4 text-[16px] font-semibold text-foreground">
-                  {step.title}
-                </h3>
-                <p className="mt-2 text-[14px] leading-relaxed text-muted-foreground">
-                  {step.text}
-                </p>
-              </li>
-            ))}
-          </ol>
-
-          <p className="mt-12 max-w-3xl border-l-4 border-primary pl-5 text-[18px] leading-relaxed text-foreground">
-            A transformação não termina quando o sistema entra no ar. Ela acontece quando a
-            nova forma de trabalhar passa a fazer parte da rotina da empresa.
+          <p className="text-[16px] leading-relaxed text-primary-foreground/80">
+            A metodologia da Thanks Up para compreender a realidade da empresa, organizar
+            prioridades, estruturar soluções, implantar melhorias e acompanhar a evolução.
           </p>
-          <a href="#contato" className="btn-primary mt-8">
+        </div>
+
+        <ol className="relative mt-16 grid gap-8 md:grid-cols-3 lg:grid-cols-5">
+          <div
+            className="absolute left-6 top-0 hidden h-full w-px bg-primary-foreground/20 md:block lg:left-0 lg:top-6 lg:h-px lg:w-full"
+            aria-hidden="true"
+          />
+          {DNA_STEPS.map((step, i) => (
+            <li key={step.title} className="relative">
+              <span className="relative z-10 flex h-12 w-12 items-center justify-center rounded-full border-2 border-accent bg-violet-deep text-[15px] font-bold text-accent">
+                {i + 1}
+              </span>
+              <p className="mt-5 text-[12px] font-semibold uppercase tracking-[0.16em] text-accent/80">
+                {step.short}
+              </p>
+              <h3 className="mt-1 text-[19px] font-bold">{step.title}</h3>
+              <p className="mt-2 text-[14px] leading-relaxed text-primary-foreground/75">
+                {step.text}
+              </p>
+            </li>
+          ))}
+        </ol>
+
+        <div className="mt-16 grid gap-6 rounded-2xl bg-primary-foreground/10 p-8 lg:grid-cols-[1.2fr_0.8fr] lg:items-center">
+          <p className="text-[18px] font-semibold leading-snug sm:text-[21px]">
+            A transformação não termina quando o sistema entra no ar. Ela acontece quando a
+            nova forma de trabalhar vira rotina.
+          </p>
+          <a href="#contato" className="btn-accent justify-center lg:justify-self-end">
             Solicitar diagnóstico pelo Método DNA
           </a>
         </div>
@@ -560,6 +845,23 @@ function MethodDNA() {
     </section>
   );
 }
+
+/* ---------------- ZOHO ---------------- */
+
+const FUNNEL = [
+  { label: "Leads", w: "w-full" },
+  { label: "Qualificação", w: "w-4/5" },
+  { label: "Proposta", w: "w-3/5" },
+  { label: "Negociação", w: "w-2/5" },
+  { label: "Fechamento", w: "w-1/4" },
+];
+
+const ZOHO_BLOCKS = [
+  { icon: Filter, label: "Funil comercial" },
+  { icon: Users, label: "Usuários capacitados" },
+  { icon: Zap, label: "Automações" },
+  { icon: Activity, label: "Indicadores" },
+];
 
 const ZOHO_LIST = [
   "diagnóstico do processo comercial",
@@ -573,125 +875,180 @@ const ZOHO_LIST = [
   "suporte à evolução da solução",
 ];
 
+function CrmMock() {
+  return (
+    <div className="rounded-2xl border border-border bg-card p-6">
+      <div className="flex items-center justify-between">
+        <p className="text-[13px] font-semibold text-foreground">Funil comercial</p>
+        <span className="rounded-full bg-violet-soft px-3 py-1 text-[11px] font-semibold text-violet">
+          CRM
+        </span>
+      </div>
+      <div className="mt-5 grid gap-2.5">
+        {FUNNEL.map(({ label, w }, i) => (
+          <div key={label} className="flex items-center gap-3">
+            <span className="w-24 shrink-0 text-[12px] text-muted-foreground">
+              {label}
+            </span>
+            <div className="h-7 flex-1 rounded-md bg-muted">
+              <div
+                className={`h-7 rounded-md ${w} ${
+                  i === FUNNEL.length - 1 ? "bg-accent" : "bg-violet"
+                }`}
+                style={{ opacity: 1 - i * 0.13 }}
+              />
+            </div>
+          </div>
+        ))}
+      </div>
+      <div className="mt-6 grid grid-cols-2 gap-3">
+        {ZOHO_BLOCKS.map(({ icon: Icon, label }) => (
+          <div
+            key={label}
+            className="flex items-center gap-2.5 rounded-xl bg-muted px-3 py-3"
+          >
+            <Icon size={16} className="shrink-0 text-violet" />
+            <span className="text-[12px] font-medium leading-tight text-foreground">
+              {label}
+            </span>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
+
 function Zoho() {
   return (
     <section id="zoho" className="bg-muted/60 py-20 lg:py-28">
-      <div className="mx-auto grid max-w-6xl gap-12 px-5 lg:grid-cols-[1.15fr_0.85fr] lg:gap-16">
+      <div className="mx-auto grid max-w-6xl gap-12 px-5 lg:grid-cols-[1fr_1fr] lg:gap-16">
         <div>
-          <Eyebrow>Tecnologia aplicada à realidade do negócio</Eyebrow>
-          <h2 className="text-[28px] font-bold leading-tight text-foreground sm:text-[38px]">
+          <Eyebrow>Tecnologia aplicada ao negócio</Eyebrow>
+          <SectionTitle className="text-foreground">
             Implantação e evolução do Zoho CRM e Zoho CRM Plus
-          </h2>
-          <p className="mt-6 text-[17px] leading-relaxed text-muted-foreground">
+          </SectionTitle>
+          <p className="mt-6 text-[16px] leading-relaxed text-muted-foreground">
             Como Parceiros Consultores Oficiais Zoho, apoiamos empresas no diagnóstico do
-            processo comercial, configuração da plataforma, organização e migração de dados,
-            automações, capacitação dos usuários e evolução da operação.
+            processo comercial, na configuração da plataforma e na evolução da operação.
           </p>
-          <p className="mt-4 text-[17px] leading-relaxed text-muted-foreground">
-            Nosso trabalho começa antes da configuração da plataforma. Primeiro analisamos o
-            processo comercial, os dados, os responsáveis, as etapas do funil e os
-            indicadores necessários. Depois configuramos a tecnologia para sustentar a
-            operação desenhada.
-          </p>
-          <ul className="mt-8 grid gap-3 sm:grid-cols-2">
-            {ZOHO_LIST.map((item) => (
-              <li
-                key={item}
-                className="flex items-start gap-2.5 rounded-lg bg-card px-4 py-3 text-[15px] text-foreground/90"
-              >
-                <CheckCircle2 size={17} className="mt-0.5 shrink-0 text-primary" />
-                <span>{item}</span>
-              </li>
-            ))}
-          </ul>
-          <p className="mt-8 rounded-xl border-l-4 border-accent bg-card px-6 py-5 text-[17px] leading-relaxed text-foreground">
+
+          <div className="mt-6 grid gap-3">
+            <Accordion title="Como conduzimos a implantação">
+              Primeiro analisamos o processo comercial, os dados, os responsáveis, as etapas
+              do funil e os indicadores necessários. Depois configuramos a tecnologia para
+              sustentar a operação desenhada.
+            </Accordion>
+            <Accordion title="O que está incluído no trabalho">
+              <ul className="grid gap-2 sm:grid-cols-2">
+                {ZOHO_LIST.map((item) => (
+                  <li key={item} className="flex items-start gap-2">
+                    <CheckCircle2 size={16} className="mt-0.5 shrink-0 text-accent" />
+                    <span>{item}</span>
+                  </li>
+                ))}
+              </ul>
+            </Accordion>
+          </div>
+
+          <p className="mt-8 rounded-xl border-l-4 border-accent bg-card px-6 py-5 text-[17px] font-medium leading-snug text-foreground">
             Mais do que configurar uma plataforma, estruturamos a operação que será
             gerenciada por ela.
           </p>
-          <a href="#contato" className="btn-primary mt-8">
-            Falar sobre Zoho CRM
+          <a href="#contato" className="btn-violet mt-8">
+            Falar sobre Zoho CRM <ArrowRight size={16} />
           </a>
         </div>
+
         <div className="flex flex-col gap-5">
+          <CrmMock />
           <Placeholder
-            className="min-h-[240px] bg-card"
-            label="Reservar local para aplicação futura do selo oficial de parceiro autorizado, respeitando integralmente as diretrizes de marca da Zoho."
-          />
-          <Placeholder
-            className="min-h-[220px] bg-card"
-            label="Espaço reservado para foto real de sessão de implantação ou tela de painéis do projeto."
+            className="min-h-[160px] bg-card"
+            label="Espaço reservado para o selo oficial de parceiro autorizado, conforme as diretrizes de marca da Zoho."
           />
         </div>
       </div>
     </section>
   );
 }
+
+/* ---------------- POR QUE A THANKS UP ---------------- */
 
 const DIFFS = [
   {
     icon: Compass,
     title: "Visão de negócio antes da tecnologia",
-    text: "Compreendemos o processo, o problema e o resultado esperado antes de definir a solução.",
+    text: "Entendemos o processo, o problema e o resultado esperado antes da solução.",
   },
   {
     icon: Layers,
     title: "Estruturação e execução",
-    text: "Não entregamos apenas recomendações. Participamos da implantação das melhorias definidas.",
+    text: "Participamos da implantação das melhorias, não apenas da recomendação.",
   },
   {
     icon: Gauge,
     title: "Acompanhamento da evolução",
-    text: "Monitoramos adoção, indicadores, resultados e novas oportunidades de melhoria.",
+    text: "Monitoramos adoção, indicadores, resultados e novas oportunidades.",
   },
   {
     icon: Settings2,
-    title: "Soluções adaptadas à realidade da empresa",
-    text: "Cada projeto respeita a maturidade, as prioridades e a capacidade de execução da organização.",
+    title: "Soluções adaptadas à realidade",
+    text: "Cada projeto respeita a maturidade e a capacidade de execução da empresa.",
   },
   {
     icon: Users,
-    title: "Proximidade com a liderança e as equipes",
-    text: "Trabalhamos com quem decide e com quem executará os novos processos no dia a dia.",
+    title: "Proximidade com liderança e equipes",
+    text: "Trabalhamos com quem decide e com quem executa no dia a dia.",
   },
 ];
 
 function WhyUs() {
   return (
-    <section id="por-que" className="py-20 lg:py-28">
+    <section id="por-que" className="bg-background py-20 lg:py-28">
       <div className="mx-auto max-w-6xl px-5">
-        <div className="max-w-3xl">
-          <Eyebrow>Diferenciais</Eyebrow>
-          <h2 className="text-[28px] font-bold leading-tight text-foreground sm:text-[38px]">
-            Por que conduzir essa transformação com a Thanks Up?
-          </h2>
-        </div>
-        <div className="mt-12 grid gap-6 lg:grid-cols-[1.1fr_0.9fr]">
-          <div className="grid gap-4">
-            {DIFFS.map(({ icon: Icon, title, text }) => (
-              <div
-                key={title}
-                className="flex gap-4 rounded-xl border border-border bg-card p-6"
-              >
-                <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-primary-soft text-primary">
-                  <Icon size={18} />
-                </span>
-                <div>
-                  <h3 className="text-[16px] font-semibold text-foreground">{title}</h3>
-                  <p className="mt-1.5 text-[15px] leading-relaxed text-muted-foreground">
-                    {text}
-                  </p>
-                </div>
-              </div>
-            ))}
+        <div className="grid gap-8 lg:grid-cols-[0.9fr_1.1fr] lg:items-end">
+          <div>
+            <Eyebrow>Diferenciais</Eyebrow>
+            <SectionTitle className="text-foreground">
+              Por que conduzir essa transformação com a Thanks Up?
+            </SectionTitle>
           </div>
-          <div className="flex flex-col gap-3">
-            <Placeholder
-              className="min-h-[320px] flex-1"
-              label="Espaço reservado para uma foto real da equipe Thanks Up."
-            />
-            <p className="text-center text-sm text-muted-foreground">
-              Pessoas reais, próximas da operação e comprometidas com a execução.
+          <Placeholder
+            className="min-h-[120px] lg:min-h-[140px]"
+            label="Espaço reservado para foto real da equipe Thanks Up em ambiente corporativo."
+          />
+        </div>
+
+        <div className="mt-12 grid gap-5 md:grid-cols-2 lg:grid-cols-3">
+          {DIFFS.map(({ icon: Icon, title, text }, i) => (
+            <div
+              key={title}
+              className={`card-lift rounded-2xl border border-border p-7 ${
+                i === 0 ? "bg-brand-mist" : i === 4 ? "bg-violet-soft" : "bg-card"
+              }`}
+            >
+              <div className="flex items-center justify-between">
+                <span className="flex h-11 w-11 items-center justify-center rounded-xl bg-violet text-primary-foreground">
+                  <Icon size={19} />
+                </span>
+                <span className="text-[24px] font-extrabold text-violet/20">
+                  0{i + 1}
+                </span>
+              </div>
+              <h3 className="mt-5 text-[17px] font-semibold leading-snug text-foreground">
+                {title}
+              </h3>
+              <p className="mt-2 text-[15px] leading-relaxed text-muted-foreground">
+                {text}
+              </p>
+            </div>
+          ))}
+          <div className="flex flex-col justify-center rounded-2xl bg-primary-deep p-7 text-primary-foreground">
+            <p className="text-[18px] font-semibold leading-snug">
+              Pessoas próximas da operação e comprometidas com a execução.
             </p>
+            <a href="#contato" className="btn-accent mt-6 self-start">
+              Falar com a equipe
+            </a>
           </div>
         </div>
       </div>
@@ -699,106 +1056,115 @@ function WhyUs() {
   );
 }
 
+/* ---------------- PERFIL DE CLIENTE ---------------- */
+
 const PROFILE = [
-  "empresas que cresceram mais rápido do que seus processos",
-  "operações dependentes de planilhas e controles manuais",
-  "empresas sem indicadores confiáveis",
-  "organizações que desejam implantar ou reorganizar o CRM",
-  "lideranças que precisam integrar áreas e informações",
-  "empresas que querem aumentar produtividade e previsibilidade",
-  "organizações dispostas a rever processos e envolver suas equipes na mudança",
+  "cresceram mais rápido do que seus processos",
+  "dependem de planilhas e controles manuais",
+  "não possuem indicadores confiáveis",
+  "querem implantar ou reorganizar o CRM",
+  "precisam integrar áreas e informações",
+  "buscam produtividade e previsibilidade",
+  "estão dispostas a rever processos com suas equipes",
 ];
 
 function ClientProfile() {
   return (
-    <section className="bg-muted/60 py-20 lg:py-28">
-      <div className="mx-auto max-w-6xl px-5">
-        <div className="max-w-3xl">
+    <section className="bg-brand-mist py-20 lg:py-28">
+      <div className="mx-auto grid max-w-6xl gap-10 px-5 lg:grid-cols-[0.85fr_1.15fr]">
+        <div>
           <Eyebrow>Perfil de cliente</Eyebrow>
-          <h2 className="text-[28px] font-bold leading-tight text-foreground sm:text-[38px]">
-            A Thanks Up é para empresas que querem crescer sem perder o controle da operação.
-          </h2>
+          <SectionTitle className="text-primary-deep">
+            Para empresas que querem crescer sem perder o controle da operação.
+          </SectionTitle>
+          <p className="mt-6 border-l-4 border-accent bg-background px-6 py-5 text-[16px] font-medium leading-snug text-foreground">
+            Não existe transformação consistente sem participação da liderança e
+            compromisso com a execução.
+          </p>
         </div>
-        <ul className="mt-10 grid gap-3 md:grid-cols-2">
+        <ul className="grid content-start gap-3 sm:grid-cols-2">
           {PROFILE.map((item) => (
             <li
               key={item}
-              className="flex items-start gap-3 rounded-lg bg-card px-5 py-4 text-[15px] text-foreground/90"
+              className="flex items-start gap-3 rounded-xl bg-background px-5 py-4 text-[15px] text-foreground/90"
             >
-              <span className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-accent" />
-              <span>{item}</span>
+              <Check size={16} className="mt-1 shrink-0 text-violet" />
+              <span>Empresas que {item}</span>
             </li>
           ))}
         </ul>
-        <p className="mt-10 rounded-xl border-l-4 border-primary bg-card px-7 py-6 text-[18px] font-medium leading-relaxed text-foreground">
-          Não existe transformação consistente sem participação da liderança e compromisso
-          com a execução.
-        </p>
       </div>
     </section>
   );
 }
 
+/* ---------------- CONTEÚDOS ---------------- */
+
 const POSTS = [
-  "Como saber se a gestão da sua empresa acompanhou o crescimento do negócio",
-  "Por que implantações de CRM falham — e como evitar",
-  "Indicadores que todo gestor deveria acompanhar em tempo real",
+  {
+    title: "Como saber se a gestão acompanhou o crescimento do negócio",
+    icon: TrendingUp,
+  },
+  { title: "Por que implantações de CRM falham — e como evitar", icon: Settings2 },
+  { title: "Indicadores que todo gestor deveria acompanhar", icon: LineChart },
 ];
 
 function Content() {
   return (
-    <section className="py-20 lg:py-28">
+    <section className="bg-background py-20 lg:py-28">
       <div className="mx-auto max-w-6xl px-5">
         <div className="max-w-3xl">
           <Eyebrow>Conteúdos</Eyebrow>
-          <h2 className="text-[28px] font-bold leading-tight text-foreground sm:text-[38px]">
-            Conteúdos para uma gestão mais organizada e inteligente
-          </h2>
+          <SectionTitle className="text-foreground">
+            Conteúdos para uma gestão mais organizada
+          </SectionTitle>
         </div>
         <div className="mt-10 grid gap-6 md:grid-cols-3">
-          {POSTS.map((title) => (
+          {POSTS.map(({ title, icon: Icon }, i) => (
             <article
               key={title}
-              className="flex flex-col overflow-hidden rounded-xl border border-border bg-card"
+              className="card-lift flex flex-col overflow-hidden rounded-2xl border border-border bg-card"
             >
-              <div className="flex h-36 items-center justify-center border-b border-dashed border-primary/20 bg-primary-soft/60 text-primary">
-                <ImageIcon size={22} />
+              <div
+                className={`grid-dots flex h-32 items-center justify-center ${
+                  i === 1 ? "bg-violet-soft" : i === 2 ? "bg-accent-soft" : "bg-muted"
+                }`}
+              >
+                <span className="flex h-12 w-12 items-center justify-center rounded-xl bg-background text-violet shadow-sm">
+                  <Icon size={20} />
+                </span>
               </div>
               <div className="flex flex-1 flex-col p-6">
-                <span className="text-[11px] font-semibold uppercase tracking-[0.14em] text-muted-foreground">
+                <span className="text-[11px] font-semibold uppercase tracking-[0.14em] text-accent-foreground/60">
                   Em breve
                 </span>
                 <h3 className="mt-3 text-[17px] font-semibold leading-snug text-foreground">
                   {title}
                 </h3>
-                <p className="mt-auto pt-4 text-sm text-muted-foreground">
-                  Conteúdo que será publicado futuramente.
-                </p>
               </div>
             </article>
           ))}
         </div>
-        <a href="#contato" className="btn-outline mt-10">
-          Ver conteúdos
-        </a>
       </div>
     </section>
   );
 }
 
+/* ---------------- CTA FINAL ---------------- */
+
 function FinalCTA() {
   return (
-    <section className="relative overflow-hidden bg-primary py-20 text-primary-foreground lg:py-24">
+    <section className="relative overflow-hidden bg-violet py-20 text-primary-foreground lg:py-24">
       <BrandMark className="pointer-events-none absolute -left-10 top-6 h-40 w-auto opacity-[0.08]" />
       <BrandMark className="pointer-events-none absolute -right-8 bottom-4 h-56 w-auto opacity-[0.06]" />
       <div className="relative mx-auto max-w-4xl px-5 text-center">
-        <h2 className="text-[28px] font-bold leading-tight sm:text-[38px]">
+        <h2 className="text-[28px] font-bold leading-tight sm:text-[40px]">
           Sua empresa está preparada para crescer com mais organização, integração e
           segurança?
         </h2>
         <p className="mx-auto mt-6 max-w-2xl text-[17px] leading-relaxed text-primary-foreground/85">
-          O primeiro passo é compreender onde estão os gargalos, quais mudanças devem ser
-          priorizadas e qual caminho faz sentido para a realidade da sua operação.
+          O primeiro passo é compreender onde estão os gargalos e quais mudanças devem ser
+          priorizadas.
         </p>
         <div className="mt-9 flex flex-col justify-center gap-3 sm:flex-row">
           <a href="#contato" className="btn-accent justify-center">
@@ -816,6 +1182,8 @@ function FinalCTA() {
     </section>
   );
 }
+
+/* ---------------- CONTATO ---------------- */
 
 const SOLUTION_OPTIONS = [
   "Diagnóstico Operacional Empresarial",
@@ -844,27 +1212,27 @@ function Contact() {
   }
 
   return (
-    <section id="contato" className="py-20 lg:py-28">
+    <section id="contato" className="bg-muted/60 py-20 lg:py-28">
       <div className="mx-auto grid max-w-6xl gap-12 px-5 lg:grid-cols-[0.85fr_1.15fr] lg:gap-16">
         <div>
           <Eyebrow>Contato</Eyebrow>
-          <h2 className="text-[28px] font-bold leading-tight text-foreground sm:text-[36px]">
+          <SectionTitle className="text-foreground">
             Solicite um diagnóstico operacional
-          </h2>
-          <p className="mt-5 text-[17px] leading-relaxed text-muted-foreground">
-            Conte brevemente o cenário atual da sua empresa. A partir das informações
-            enviadas, iniciamos uma conversa para entender prioridades e próximos passos.
+          </SectionTitle>
+          <p className="mt-5 text-[16px] leading-relaxed text-muted-foreground">
+            Conte brevemente o cenário atual da sua empresa. A partir daí, iniciamos a
+            conversa sobre prioridades e próximos passos.
           </p>
           <Placeholder
-            className="mt-8 min-h-[180px]"
-            label="Espaço reservado para dados de contato oficiais da empresa (endereço, telefone, e-mail e redes sociais)."
+            className="mt-8 min-h-[180px] bg-card"
+            label="Espaço reservado para dados de contato oficiais (endereço, telefone, e-mail e redes sociais)."
           />
         </div>
 
         <div className="rounded-2xl border border-border bg-card p-7 sm:p-9">
           {sent ? (
             <div className="flex min-h-[380px] flex-col items-center justify-center gap-4 text-center">
-              <span className="flex h-14 w-14 items-center justify-center rounded-full bg-primary-soft text-primary">
+              <span className="flex h-14 w-14 items-center justify-center rounded-full bg-violet-soft text-violet">
                 <CheckCircle2 size={26} />
               </span>
               <h3 className="text-xl font-semibold text-foreground">
@@ -911,7 +1279,7 @@ function Contact() {
                 </label>
                 <textarea id="desafio" name="desafio" rows={4} required className="form-input" />
               </div>
-              <button type="submit" className="btn-primary sm:col-span-2 justify-center">
+              <button type="submit" className="btn-violet sm:col-span-2 justify-center">
                 Enviar solicitação
               </button>
             </form>
@@ -921,6 +1289,8 @@ function Contact() {
     </section>
   );
 }
+
+/* ---------------- RODAPÉ ---------------- */
 
 const FOOTER_LINKS = [
   { label: "Início", href: "#inicio" },
@@ -935,7 +1305,7 @@ const FOOTER_LINKS = [
 
 function Footer() {
   return (
-    <footer className="relative overflow-hidden border-t border-border bg-primary-deep py-14 text-primary-foreground">
+    <footer className="relative overflow-hidden bg-primary-deep py-14 text-primary-foreground">
       <BrandMark className="pointer-events-none absolute -bottom-10 right-4 h-52 w-auto opacity-[0.06]" />
       <div className="mx-auto grid max-w-6xl gap-10 px-5 md:grid-cols-[1.2fr_0.8fr_0.8fr]">
         <div>
