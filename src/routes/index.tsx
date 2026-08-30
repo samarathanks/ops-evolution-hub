@@ -26,20 +26,20 @@ import {
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "Thanks Up | Boutique de Transformação Empresarial" },
+      { title: "Thanks Up | Inteligência Operacional Corporativa" },
       {
         name: "description",
         content:
-          "Organizamos a gestão da sua empresa: processos estruturados, tecnologia implantada e indicadores confiáveis para crescer com eficiência.",
+          "Processos, tecnologia e indicadores para empresas que querem crescer com mais organização, produtividade e controle. Conheça a Thanks Up.",
       },
       {
         property: "og:title",
-        content: "Thanks Up | Boutique de Transformação Empresarial",
+        content: "Thanks Up | Inteligência Operacional Corporativa",
       },
       {
         property: "og:description",
         content:
-          "Consultoria, implantação e assessoria contínua em gestão, processos, tecnologia e indicadores.",
+          "Diagnóstico, estruturação de processos, implantação tecnológica e acompanhamento da evolução operacional.",
       },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
@@ -158,7 +158,7 @@ function Hero() {
     <section id="inicio" className="pt-[72px]">
       <div className="mx-auto grid max-w-6xl items-center gap-12 px-5 py-16 lg:grid-cols-2 lg:gap-16 lg:py-28">
         <div>
-          <Eyebrow>Boutique de Transformação Empresarial</Eyebrow>
+          <Eyebrow>Inteligência Operacional Corporativa</Eyebrow>
           <h1 className="text-[34px] font-extrabold leading-[1.12] text-foreground sm:text-5xl">
             Organizamos a gestão da sua empresa para que ela cresça com{" "}
             <span className="text-primary">eficiência</span>.
@@ -176,9 +176,8 @@ function Hero() {
               Conheça o Método DNA
             </a>
           </div>
-          <p className="mt-7 border-l-2 border-accent pl-4 text-sm leading-relaxed text-muted-foreground">
-            Estratégia, processos, tecnologia e acompanhamento em uma única jornada de
-            transformação.
+          <p className="mt-7 border-l-2 border-accent pl-4 text-sm font-medium leading-relaxed text-muted-foreground">
+            Eficiência corporativa com inteligência estratégica.
           </p>
         </div>
         <Placeholder
@@ -267,18 +266,23 @@ function Challenges() {
 const VALUE_STEPS = [
   {
     icon: Compass,
-    title: "Consultoria",
-    text: "Diagnóstico, análise, desenho da solução e definição do plano de transformação.",
+    title: "Diagnóstico",
+    text: "Compreendemos o cenário atual, os gargalos, os objetivos e as prioridades da empresa.",
   },
   {
     icon: Layers,
-    title: "Implantação",
-    text: "Configuração de processos, tecnologia, indicadores, automações e capacitação da equipe.",
+    title: "Estruturação",
+    text: "Desenhamos processos, responsabilidades, fluxos, indicadores e o plano de evolução da operação.",
   },
   {
-    icon: Handshake,
-    title: "Assessoria",
-    text: "Acompanhamento contínuo, análise dos resultados, ajustes e evolução da operação.",
+    icon: Settings2,
+    title: "Implantação",
+    text: "Colocamos processos, tecnologia, automações e indicadores em funcionamento, capacitando as equipes envolvidas.",
+  },
+  {
+    icon: Gauge,
+    title: "Acompanhamento",
+    text: "Monitoramos a adoção, os resultados e as oportunidades de melhoria contínua.",
   },
 ];
 
@@ -289,16 +293,16 @@ function ValueProposition() {
         <div className="max-w-3xl">
           <Eyebrow>Como atuamos</Eyebrow>
           <h2 className="text-[28px] font-bold leading-tight text-foreground sm:text-[38px]">
-            Não entregamos apenas recomendações. Ajudamos a transformar a operação.
+            Não entregamos apenas recomendações. Desenvolvemos e implantamos soluções para
+            transformar a operação.
           </h2>
           <p className="mt-5 text-[17px] leading-relaxed text-muted-foreground">
-            A Thanks Up atua desde a compreensão do problema até a implantação e o
-            acompanhamento das melhorias. Primeiro entendemos a realidade da empresa. Depois
-            estruturamos processos, definimos prioridades, implantamos as soluções
-            necessárias e acompanhamos a evolução da gestão.
+            A Thanks Up atua desde a compreensão do cenário até a implantação e o
+            acompanhamento das melhorias. Estruturamos processos, conectamos tecnologia,
+            organizamos indicadores e apoiamos a evolução da gestão.
           </p>
         </div>
-        <div className="mt-14 grid gap-6 md:grid-cols-3">
+        <div className="mt-14 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
           {VALUE_STEPS.map(({ icon: Icon, title, text }, i) => (
             <div key={title} className="relative rounded-xl bg-muted/70 p-7">
               <div className="flex items-center gap-3">
@@ -317,8 +321,8 @@ function ValueProposition() {
           ))}
         </div>
         <p className="mx-auto mt-12 max-w-3xl text-center text-[17px] leading-relaxed text-foreground">
-          A consultoria mostra o caminho. A implantação coloca a transformação em prática. A
-          assessoria impede que a empresa volte ao ponto de partida.
+          O diagnóstico revela as prioridades. A estruturação define o caminho. A
+          implantação transforma a operação. O acompanhamento sustenta a evolução.
         </p>
       </div>
     </section>
