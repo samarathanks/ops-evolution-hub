@@ -80,7 +80,7 @@ const NAV = [
 function Logo({
   variant = "color",
   className = "",
-  sizeClass = "h-11 w-auto sm:h-12",
+  sizeClass = "h-[50px] w-auto sm:h-[55px]",
 }: {
   variant?: "color" | "white";
   className?: string;
@@ -413,7 +413,7 @@ function Hero() {
       <div className="relative mx-auto grid max-w-6xl items-center gap-14 px-5 pb-12 pt-14 lg:grid-cols-[1.05fr_0.95fr] lg:gap-16 lg:pb-16 lg:pt-20">
         <div>
           <Eyebrow>Inteligência Operacional Corporativa</Eyebrow>
-          <h1 className="max-w-[16ch] text-[34px] font-extrabold leading-[1.08] text-foreground sm:text-[50px]">
+          <h1 className="max-w-[20ch] text-[34px] font-extrabold leading-[1.08] text-foreground sm:text-[50px]">
             Organizamos a gestão da sua empresa para que ela cresça com{" "}
             <span className="text-violet">eficiência</span>.
           </h1>
@@ -590,65 +590,39 @@ const VALUE_STEPS = [
   },
 ];
 
-const STEP_BG = ["bg-violet/25", "bg-violet/50", "bg-violet/75", "bg-violet"];
-
 function ValueProposition() {
   return (
-    <section className="bg-muted/60 py-20 lg:py-28">
+    <section className="border-y border-border bg-muted/60 py-10">
       <div className="mx-auto max-w-6xl px-5">
-        <div className="max-w-3xl">
-          <Eyebrow>Como atuamos</Eyebrow>
-          <SectionTitle className="text-foreground">
-            Não entregamos apenas recomendações.
-            <span className="text-violet"> Implantamos a transformação.</span>
-          </SectionTitle>
-          <p className="mt-5 text-[16px] leading-relaxed text-muted-foreground">
-            Da compreensão do cenário ao acompanhamento das melhorias.
-          </p>
-        </div>
-
-        <div className="relative mt-14">
-          <div
-            className="absolute left-0 right-0 top-6 hidden h-px bg-border lg:block"
-            aria-hidden="true"
-          />
-          <ol className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
-            {VALUE_STEPS.map(({ icon: Icon, title, short, text }, i) => (
-              <li key={title} className="relative">
-                <div className="flex items-center gap-3">
-                  <span
-                    className={`relative z-10 flex h-12 w-12 items-center justify-center rounded-full text-primary-foreground ${STEP_BG[i]}`}
-                  >
-                    <Icon size={20} />
-                  </span>
-                  <span className="text-[26px] font-extrabold text-violet/25">
-                    0{i + 1}
-                  </span>
-                </div>
-                <h3 className="mt-5 text-lg font-bold text-foreground">{title}</h3>
-                <p className="mt-1 text-[13px] font-semibold uppercase tracking-[0.1em] text-accent-foreground/70">
-                  {short}
-                </p>
-                <p className="mt-3 text-[15px] leading-relaxed text-muted-foreground">
-                  {text}
-                </p>
-              </li>
-            ))}
-          </ol>
-        </div>
-
-        <p className="mt-14 grid gap-3 text-[16px] font-medium leading-snug text-foreground sm:grid-cols-2 lg:grid-cols-4">
-          {[
-            "O diagnóstico revela as prioridades.",
-            "A estruturação define o caminho.",
-            "A implantação transforma a operação.",
-            "O acompanhamento sustenta a evolução.",
-          ].map((s) => (
-            <span key={s} className="border-t-2 border-accent pt-3">
-              {s}
-            </span>
-          ))}
+        <p className="text-[12px] font-semibold uppercase tracking-[0.18em] text-violet">
+          Modelo de atuação
         </p>
+        <ol className="mt-5 grid gap-3 sm:grid-cols-2 lg:flex lg:items-stretch lg:gap-2">
+          {VALUE_STEPS.map(({ icon: Icon, title, short }, i) => (
+            <li key={title} className="flex flex-1 items-center gap-2">
+              <div className="flex flex-1 items-center gap-3 rounded-xl border border-border bg-background px-4 py-3">
+                <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-violet text-primary-foreground">
+                  <Icon size={17} />
+                </span>
+                <div className="min-w-0">
+                  <p className="text-[14px] font-bold leading-tight text-foreground">
+                    {title}
+                  </p>
+                  <p className="text-[12px] leading-tight text-muted-foreground">
+                    {short}
+                  </p>
+                </div>
+              </div>
+              {i < VALUE_STEPS.length - 1 && (
+                <ArrowRight
+                  size={18}
+                  className="hidden shrink-0 text-accent lg:block"
+                  aria-hidden="true"
+                />
+              )}
+            </li>
+          ))}
+        </ol>
       </div>
     </section>
   );
@@ -731,8 +705,8 @@ function SolutionCard({
 }) {
   const [open, setOpen] = useState(false);
   const { icon: Icon } = solution;
-  const visible = open ? solution.items : solution.items.slice(0, 4);
-  const rest = solution.items.length - 4;
+  const visible = open ? solution.items : solution.items.slice(0, 3);
+  const rest = solution.items.length - 3;
 
   return (
     <article className="card-lift flex flex-col rounded-2xl border border-border bg-card p-7 lg:p-8">
@@ -1094,6 +1068,22 @@ function WhyUs() {
 
         <div className="flex flex-col gap-6 lg:sticky lg:top-28 lg:self-start">
           <BrandComposition />
+          <div className="rounded-2xl border border-border bg-brand-mist p-7">
+            <h3 className="text-[18px] font-bold leading-snug text-primary-deep">
+              A Thanks Up faz sentido para empresas que…
+            </h3>
+            <ul className="mt-4 grid gap-2.5">
+              {PROFILE.map((item) => (
+                <li
+                  key={item}
+                  className="flex items-start gap-2.5 text-[15px] text-foreground/90"
+                >
+                  <Check size={16} className="mt-1 shrink-0 text-violet" />
+                  <span>{item}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
           <div className="rounded-2xl bg-primary-deep p-7 text-primary-foreground">
             <Sparkles size={22} className="text-accent" />
             <p className="mt-4 text-[18px] font-semibold leading-snug">
@@ -1116,48 +1106,13 @@ function WhyUs() {
   );
 }
 
-
-/* ---------------- PERFIL DE CLIENTE ---------------- */
-
 const PROFILE = [
   "cresceram mais rápido do que seus processos",
   "dependem de planilhas e controles manuais",
   "não possuem indicadores confiáveis",
-  "querem implantar ou reorganizar o CRM",
-  "precisam integrar áreas e informações",
-  "buscam produtividade e previsibilidade",
-  "estão dispostas a rever processos com suas equipes",
+  "precisam integrar áreas, tecnologia e informações",
 ];
 
-function ClientProfile() {
-  return (
-    <section className="bg-brand-mist py-20 lg:py-28">
-      <div className="mx-auto grid max-w-6xl gap-10 px-5 lg:grid-cols-[0.85fr_1.15fr]">
-        <div>
-          <Eyebrow>Perfil de cliente</Eyebrow>
-          <SectionTitle className="text-primary-deep">
-            Para empresas que querem crescer sem perder o controle da operação.
-          </SectionTitle>
-          <p className="mt-6 border-l-4 border-accent bg-background px-6 py-5 text-[16px] font-medium leading-snug text-foreground">
-            Não existe transformação consistente sem participação da liderança e
-            compromisso com a execução.
-          </p>
-        </div>
-        <ul className="grid content-start gap-3 sm:grid-cols-2">
-          {PROFILE.map((item) => (
-            <li
-              key={item}
-              className="flex items-start gap-3 rounded-xl bg-background px-5 py-4 text-[15px] text-foreground/90"
-            >
-              <Check size={16} className="mt-1 shrink-0 text-violet" />
-              <span>Empresas que {item}</span>
-            </li>
-          ))}
-        </ul>
-      </div>
-    </section>
-  );
-}
 
 /* ---------------- CONTEÚDOS (desativado) ----------------
    Seção mantida no código para reativação quando existirem artigos reais.
@@ -1486,6 +1441,9 @@ function Footer() {
           <p className="mt-3 max-w-sm text-[15px] leading-relaxed text-primary-foreground/75">
             Eficiência corporativa com inteligência estratégica.
           </p>
+          <p className="mt-3 text-[14px] font-medium text-primary-foreground/60">
+            Uma empresa do Ecossistema Thanks.
+          </p>
         </div>
         <div>
           <p className="text-[12px] font-semibold uppercase tracking-[0.14em] text-primary-foreground">
@@ -1562,7 +1520,7 @@ function Index() {
         <MethodDNA />
         <Zoho />
         <WhyUs />
-        <ClientProfile />
+        
         {/* Seção "Conteúdos" desativada até existirem artigos reais (ver componente Content). */}
         <FinalCTA />
         <Contact />
