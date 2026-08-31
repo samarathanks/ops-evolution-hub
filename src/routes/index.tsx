@@ -725,7 +725,11 @@ function SolutionCard({
         </button>
       )}
 
-      <a href="#contato" className="btn-outline mt-7 self-start">
+      <a
+        href="#contato"
+        onClick={() => selectSolution(solution.name)}
+        className="btn-outline mt-7 self-start"
+      >
         {solution.cta} <ArrowUpRight size={16} />
       </a>
     </article>
@@ -956,17 +960,18 @@ function Zoho() {
             Mais do que configurar uma plataforma, estruturamos a operação que será
             gerenciada por ela.
           </p>
-          <a href="#contato" className="btn-violet mt-8">
+          <a
+            href="#contato"
+            onClick={() => selectSolution("Zoho CRM e Zoho CRM Plus")}
+            className="btn-violet mt-8"
+          >
             Falar sobre Zoho CRM <ArrowRight size={16} />
           </a>
         </div>
 
         <div className="flex flex-col gap-5">
           <CrmMock />
-          <Placeholder
-            className="min-h-[160px] bg-card"
-            label="Espaço reservado para o selo oficial de parceiro autorizado, conforme as diretrizes de marca da Zoho."
-          />
+          {/* Espaço estrutural para o arquivo oficial do selo de parceiro Zoho. */}
         </div>
       </div>
     </section>
@@ -1042,17 +1047,21 @@ function WhyUs() {
         </div>
 
         <div className="flex flex-col gap-6 lg:sticky lg:top-28 lg:self-start">
-          <Placeholder
-            className="min-h-[260px]"
-            label="Espaço reservado para foto real da equipe Thanks Up em reunião com cliente."
-          />
+          <BrandComposition />
           <div className="rounded-2xl bg-primary-deep p-7 text-primary-foreground">
             <Sparkles size={22} className="text-accent" />
             <p className="mt-4 text-[18px] font-semibold leading-snug">
               Pessoas próximas da operação e comprometidas com a execução.
             </p>
-            <a href="#contato" className="btn-accent mt-6">
-              Falar com a equipe
+            <a
+              href={whatsappLink(
+                "Olá, equipe Thanks Up. Gostaria de falar com a equipe sobre a operação da minha empresa.",
+              )}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="btn-accent mt-6"
+            >
+              Falar com a equipe <MessageCircle size={16} />
             </a>
           </div>
         </div>
@@ -1175,8 +1184,15 @@ function FinalCTA() {
           <a href="#contato" className="btn-accent justify-center">
             Solicitar diagnóstico operacional
           </a>
-          <a href="#contato" className="btn-inverse justify-center">
-            Falar com a Thanks Up
+          <a
+            href={whatsappLink(
+              "Olá, equipe Thanks Up. Gostaria de conversar sobre um diagnóstico operacional.",
+            )}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="btn-inverse justify-center"
+          >
+            Falar com a Thanks Up <MessageCircle size={16} />
           </a>
         </div>
         <p className="mt-6 text-sm text-primary-foreground/70">
