@@ -1209,12 +1209,79 @@ const FIELDS = [
   { id: "colaboradores", label: "Número aproximado de colaboradores", type: "text" },
 ];
 
+function ContactChannels() {
+  return (
+    <div className="mt-8 grid gap-3">
+      <a
+        href={whatsappLink(
+          "Olá, equipe Thanks Up. Gostaria de conversar sobre um diagnóstico operacional.",
+        )}
+        target="_blank"
+        rel="noopener noreferrer"
+        className="flex items-center gap-3 rounded-xl border border-border bg-card px-5 py-4 transition-colors hover:border-violet"
+      >
+        <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-violet-soft text-violet">
+          <MessageCircle size={18} />
+        </span>
+        <span>
+          <span className="block text-[12px] font-semibold uppercase tracking-[0.12em] text-muted-foreground">
+            WhatsApp
+          </span>
+          <span className="block text-[15px] font-semibold text-foreground">
+            {WHATSAPP_DISPLAY}
+          </span>
+        </span>
+      </a>
+      <a
+        href={`mailto:${CONTACT_EMAIL}`}
+        className="flex items-center gap-3 rounded-xl border border-border bg-card px-5 py-4 transition-colors hover:border-violet"
+      >
+        <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-accent-soft text-primary-deep">
+          <Mail size={18} />
+        </span>
+        <span>
+          <span className="block text-[12px] font-semibold uppercase tracking-[0.12em] text-muted-foreground">
+            E-mail
+          </span>
+          <span className="block text-[15px] font-semibold text-foreground">
+            {CONTACT_EMAIL}
+          </span>
+        </span>
+      </a>
+    </div>
+  );
+}
+
 function Contact() {
-  const [sent, setSent] = useState(false);
+  const [solucao, setSolucao] = useState("");
+  const [consent, setConsent] = useState(false);
+
+  useEffect(() => {
+    function onSelect(e: Event) {
+      const detail = (e as CustomEvent<string>).detail;
+      if (detail) setSolucao(detail);
+    }
+    window.addEventListener(SOLUTION_EVENT, onSelect);
+    return () => window.removeEventListener(SOLUTION_EVENT, onSelect);
+  }, []);
 
   function handleSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
-    setSent(true);
+    const data = new FormData(e.currentTarget);
+    const get = (k: string) => String(data.get(k) ?? "").trim();
+    const message = [
+      "Olá, equipe Thanks Up. Gostaria de conversar sobre um diagnóstico operacional.",
+      "",
+      `Nome: ${get("nome")}`,
+      `Empresa: ${get("empresa")}`,
+      `Cargo: ${get("cargo")}`,
+      `E-mail: ${get("email")}`,
+      `Telefone: ${get("telefone")}`,
+      `Número de colaboradores: ${get("colaboradores")}`,
+      `Solução de interesse: ${get("solucao")}`,
+      `Principal desafio: ${get("desafio")}`,
+    ].join("\n");
+    window.open(whatsappLink(message), "_blank", "noopener,noreferrer");
   }
 
   return (
@@ -1229,67 +1296,104 @@ function Contact() {
             Conte brevemente o cenário atual da sua empresa. A partir daí, iniciamos a
             conversa sobre prioridades e próximos passos.
           </p>
-          <Placeholder
-            className="mt-8 min-h-[180px] bg-card"
-            label="Espaço reservado para dados de contato oficiais (endereço, telefone, e-mail e redes sociais)."
-          />
+          <ContactChannels />
         </div>
 
         <div className="rounded-2xl border border-border bg-card p-7 sm:p-9">
-          {sent ? (
-            <div className="flex min-h-[380px] flex-col items-center justify-center gap-4 text-center">
-              <span className="flex h-14 w-14 items-center justify-center rounded-full bg-violet-soft text-violet">
-                <CheckCircle2 size={26} />
-              </span>
-              <h3 className="text-xl font-semibold text-foreground">
-                Solicitação enviada
-              </h3>
-              <p className="max-w-md text-[15px] leading-relaxed text-muted-foreground">
-                Recebemos suas informações. Nossa equipe entrará em contato para compreender
-                melhor o cenário da sua empresa.
-              </p>
-              <button
-                type="button"
-                onClick={() => setSent(false)}
-                className="btn-ghost mt-2"
+          <form onSubmit={handleSubmit} className="grid gap-5 sm:grid-cols-2">
+            {FIELDS.map((f) => (
+              <div key={f.id} className="flex flex-col gap-1.5">
+                <label htmlFor={f.id} className="form-label">
+                  {f.label} <span className="text-violet">*</span>
+                </label>
+                <input
+                  id={f.id}
+                  name={f.id}
+                  type={f.type}
+                  required
+                  maxLength={120}
+                  className="form-input"
+                />
+              </div>
+            ))}
+            <div className="flex flex-col gap-1.5 sm:col-span-2">
+              <label htmlFor="solucao" className="form-label">
+                Solução de interesse <span className="text-violet">*</span>
+              </label>
+              <select
+                id="solucao"
+                name="solucao"
+                required
+                className="form-input"
+                value={solucao}
+                onChange={(e) => setSolucao(e.target.value)}
               >
-                Enviar nova solicitação
-              </button>
+                <option value="">Selecione uma opção</option>
+                {SOLUTION_OPTIONS.map((o) => (
+                  <option key={o} value={o}>
+                    {o}
+                  </option>
+                ))}
+              </select>
             </div>
-          ) : (
-            <form onSubmit={handleSubmit} className="grid gap-5 sm:grid-cols-2">
-              {FIELDS.map((f) => (
-                <div key={f.id} className="flex flex-col gap-1.5">
-                  <label htmlFor={f.id} className="form-label">
-                    {f.label}
-                  </label>
-                  <input id={f.id} name={f.id} type={f.type} required className="form-input" />
-                </div>
-              ))}
-              <div className="flex flex-col gap-1.5 sm:col-span-2">
-                <label htmlFor="solucao" className="form-label">
-                  Solução de interesse
-                </label>
-                <select id="solucao" name="solucao" required className="form-input">
-                  <option value="">Selecione uma opção</option>
-                  {SOLUTION_OPTIONS.map((o) => (
-                    <option key={o} value={o}>
-                      {o}
-                    </option>
-                  ))}
-                </select>
-              </div>
-              <div className="flex flex-col gap-1.5 sm:col-span-2">
-                <label htmlFor="desafio" className="form-label">
-                  Principal desafio da empresa
-                </label>
-                <textarea id="desafio" name="desafio" rows={4} required className="form-input" />
-              </div>
-              <button type="submit" className="btn-violet sm:col-span-2 justify-center">
-                Enviar solicitação
-              </button>
-            </form>
-          )}
+            <div className="flex flex-col gap-1.5 sm:col-span-2">
+              <label htmlFor="desafio" className="form-label">
+                Principal desafio da empresa <span className="text-violet">*</span>
+              </label>
+              <textarea
+                id="desafio"
+                name="desafio"
+                rows={4}
+                required
+                maxLength={1000}
+                className="form-input"
+              />
+            </div>
+
+            <div className="sm:col-span-2">
+              <label
+                htmlFor="consentimento"
+                className="flex items-start gap-3 text-[14px] leading-relaxed text-muted-foreground"
+              >
+                <input
+                  id="consentimento"
+                  name="consentimento"
+                  type="checkbox"
+                  required
+                  checked={consent}
+                  onChange={(e) => setConsent(e.target.checked)}
+                  className="mt-1 h-4 w-4 shrink-0 accent-[var(--violet)]"
+                />
+                <span>
+                  Concordo com o{" "}
+                  <Link
+                    to="/privacidade"
+                    className="font-semibold text-violet underline underline-offset-4"
+                  >
+                    uso dos meus dados
+                  </Link>{" "}
+                  para que a Thanks Up entre em contato sobre esta solicitação.
+                </span>
+              </label>
+            </div>
+
+            <button type="submit" className="btn-violet justify-center sm:col-span-2">
+              Enviar pelo WhatsApp <MessageCircle size={16} />
+            </button>
+            <p className="text-[13px] leading-relaxed text-muted-foreground sm:col-span-2">
+              Você será direcionado ao WhatsApp da Thanks Up com as informações preenchidas.
+            </p>
+            <p className="text-[13px] leading-relaxed text-muted-foreground sm:col-span-2">
+              Prefere enviar por e-mail? Escreva para{" "}
+              <a
+                href={`mailto:${CONTACT_EMAIL}`}
+                className="font-semibold text-violet underline underline-offset-4"
+              >
+                {CONTACT_EMAIL}
+              </a>
+              .
+            </p>
+          </form>
         </div>
       </div>
     </section>
