@@ -2,6 +2,8 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import logoColor from "../assets/thanksup-logo-oficial.png.asset.json";
 import logoWhite from "../assets/thanksup-logo-branco.png.asset.json";
 import brandSymbol from "../assets/thanksup-simbolo.png.asset.json";
+import crmLogo from "../assets/zoho-crm.svg.asset.json";
+import crmPlusLogo from "../assets/zoho-crm-plus.svg.asset.json";
 import { useEffect, useState, type FormEvent, type ReactNode } from "react";
 import {
   CONTACT_EMAIL,
@@ -944,6 +946,28 @@ function CrmMock() {
   );
 }
 
+function ZohoProductCard({
+  logo,
+  alt,
+  name,
+  text,
+}: {
+  logo: string;
+  alt: string;
+  name: string;
+  text: string;
+}) {
+  return (
+    <div className="card-lift flex flex-col rounded-2xl border border-border bg-card p-7 sm:p-9">
+      <div className="flex items-center justify-center rounded-xl border border-border bg-muted/40 px-6 py-9 sm:py-11">
+        <img src={logo} alt={alt} loading="lazy" className="h-11 w-auto sm:h-14" />
+      </div>
+      <h3 className="mt-6 text-[20px] font-bold text-foreground">{name}</h3>
+      <p className="mt-2 text-[15px] leading-relaxed text-muted-foreground">{text}</p>
+    </div>
+  );
+}
+
 function Zoho() {
   return (
     <section id="zoho" className="bg-muted/60 py-20 lg:py-28">
@@ -991,8 +1015,24 @@ function Zoho() {
 
         <div className="flex flex-col gap-5">
           <CrmMock />
-          {/* Espaço estrutural para o arquivo oficial do selo de parceiro Zoho. */}
+{/* Espaço estrutural reservado para o badge oficial de Parceiro Zoho (arquivo oficial a ser inserido). */}
         </div>
+      </div>
+
+      {/* Produtos Zoho — logotipos oficiais */}
+      <div className="mx-auto mt-14 grid max-w-6xl gap-5 px-5 md:grid-cols-2">
+        <ZohoProductCard
+          logo={crmLogo.url}
+          alt="Zoho CRM"
+          name="Zoho CRM"
+          text="Estruturação e gestão do processo comercial, com organização do funil, automações, dados e indicadores."
+        />
+        <ZohoProductCard
+          logo={crmPlusLogo.url}
+          alt="Zoho CRM Plus"
+          name="Zoho CRM Plus"
+          text="Integração entre vendas, marketing e atendimento para uma visão mais completa da jornada do cliente."
+        />
       </div>
     </section>
   );
