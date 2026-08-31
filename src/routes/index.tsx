@@ -1104,7 +1104,8 @@ function ClientProfile() {
   );
 }
 
-/* ---------------- CONTEÚDOS ---------------- */
+/* ---------------- CONTEÚDOS (desativado) ----------------
+   Seção mantida no código para reativação quando existirem artigos reais.
 
 const POSTS = [
   {
@@ -1141,9 +1142,6 @@ function Content() {
                 </span>
               </div>
               <div className="flex flex-1 flex-col p-6">
-                <span className="text-[11px] font-semibold uppercase tracking-[0.14em] text-accent-foreground/60">
-                  Em breve
-                </span>
                 <h3 className="mt-3 text-[17px] font-semibold leading-snug text-foreground">
                   {title}
                 </h3>
@@ -1155,6 +1153,7 @@ function Content() {
     </section>
   );
 }
+------------------------------------------------------- */
 
 /* ---------------- CTA FINAL ---------------- */
 
