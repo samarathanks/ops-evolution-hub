@@ -1,8 +1,16 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, Link } from "@tanstack/react-router";
 import logoColor from "../assets/thanksup-logo.png.asset.json";
 import logoWhite from "../assets/thanksup-logo-branco.png.asset.json";
 import brandSymbol from "../assets/thanksup-simbolo.png.asset.json";
-import { useState, type FormEvent, type ReactNode } from "react";
+import { useEffect, useState, type FormEvent, type ReactNode } from "react";
+import {
+  CONTACT_EMAIL,
+  SOLUTION_EVENT,
+  WHATSAPP_DISPLAY,
+  WHATSAPP_URL,
+  selectSolution,
+  whatsappLink,
+} from "../lib/contact";
 import {
   Activity,
   ArrowRight,
@@ -16,10 +24,11 @@ import {
   Database,
   Filter,
   Gauge,
-  Image as ImageIcon,
   Layers,
   LineChart,
+  Mail,
   Menu,
+  MessageCircle,
   Minus,
   Plus,
   Repeat,
