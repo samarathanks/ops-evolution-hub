@@ -1,5 +1,5 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import logoColor from "../assets/thanksup-logo.png.asset.json";
+import logoColor from "../assets/thanksup-logo-oficial.png.asset.json";
 import logoWhite from "../assets/thanksup-logo-branco.png.asset.json";
 import brandSymbol from "../assets/thanksup-simbolo.png.asset.json";
 import { useEffect, useState, type FormEvent, type ReactNode } from "react";
@@ -1479,16 +1479,12 @@ function Footer() {
       <BrandMark className="pointer-events-none absolute -bottom-10 right-4 h-52 w-auto opacity-[0.06]" />
       <div className="mx-auto grid max-w-6xl gap-10 px-5 md:grid-cols-[1.2fr_0.8fr_0.8fr]">
         <div>
-          <Logo variant="white" sizeClass="h-11 w-auto" />
+          <Logo variant="white" sizeClass="h-9 w-auto" />
           <p className="mt-4 text-[13px] font-semibold uppercase tracking-[0.14em] text-accent">
             Inteligência Operacional Corporativa
           </p>
-          <p className="mt-4 max-w-sm text-[15px] leading-relaxed text-primary-foreground/75">
-            Estruturamos processos, implantamos tecnologia e desenvolvemos indicadores para
-            empresas que querem crescer com mais organização, controle e produtividade.
-          </p>
-          <p className="mt-5 text-sm font-medium text-primary-foreground">
-            Uma empresa do Ecossistema Thanks.
+          <p className="mt-3 max-w-sm text-[15px] leading-relaxed text-primary-foreground/75">
+            Eficiência corporativa com inteligência estratégica.
           </p>
         </div>
         <div>
