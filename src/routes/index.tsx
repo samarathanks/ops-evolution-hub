@@ -64,7 +64,6 @@ const NAV = [
   { label: "Método DNA", href: "#metodo-dna" },
   { label: "Zoho", href: "#zoho" },
   { label: "Por que a Thanks Up", href: "#por-que" },
-  { label: "Conteúdos", href: "#conteudos" },
   { label: "Contato", href: "#contato" },
 ];
 
@@ -245,16 +244,54 @@ function Accordion({
   );
 }
 
-function Placeholder({ label, className = "" }: { label: string; className?: string }) {
+/** Composição gráfica da marca usada no lugar de fotografias. */
+function BrandComposition() {
   return (
-    <div
-      className={`relative flex flex-col items-center justify-center gap-3 overflow-hidden rounded-xl border border-dashed border-secondary bg-primary-soft p-8 text-center ${className}`}
-    >
-      <BrandMark className="pointer-events-none absolute -right-6 -top-6 h-24 w-auto opacity-[0.07]" />
-      <span className="flex h-11 w-11 items-center justify-center rounded-full bg-background text-violet shadow-sm">
-        <ImageIcon size={20} />
-      </span>
-      <p className="max-w-sm text-sm leading-relaxed text-muted-foreground">{label}</p>
+    <div className="relative min-h-[260px] overflow-hidden rounded-2xl border border-border bg-violet-soft p-7">
+      <BrandMark className="pointer-events-none absolute -right-8 -top-8 h-40 w-auto opacity-[0.10]" />
+      <div
+        className="grid-dots pointer-events-none absolute bottom-4 left-4 h-24 w-24 opacity-50"
+        aria-hidden="true"
+      />
+      <div className="relative grid gap-4">
+        <div className="grid grid-cols-3 gap-3">
+          {[
+            { icon: Workflow, label: "Processos" },
+            { icon: Settings2, label: "Tecnologia" },
+            { icon: LineChart, label: "Indicadores" },
+          ].map(({ icon: Icon, label }) => (
+            <div
+              key={label}
+              className="rounded-xl border border-border bg-background p-3 text-center"
+            >
+              <Icon size={18} className="mx-auto text-violet" />
+              <p className="mt-2 text-[11px] font-semibold text-foreground">{label}</p>
+            </div>
+          ))}
+        </div>
+        <div className="flex items-center gap-2" aria-hidden="true">
+          <span className="h-2 w-2 rounded-full bg-violet" />
+          <span className="h-px flex-1 bg-violet/40" />
+          <span className="h-2 w-2 rounded-full bg-accent" />
+          <span className="h-px flex-1 bg-violet/40" />
+          <span className="h-2 w-2 rounded-full bg-violet" />
+        </div>
+        <div className="rounded-xl border border-border bg-background p-4">
+          <div className="flex items-center justify-between">
+            <p className="text-[12px] font-semibold text-foreground">Operação conectada</p>
+            <Share2 size={15} className="text-accent" />
+          </div>
+          <div className="mt-3 flex h-16 items-end gap-2" aria-hidden="true">
+            {[40, 58, 50, 72, 86].map((h, i) => (
+              <div
+                key={i}
+                style={{ height: `${h}%` }}
+                className={`flex-1 rounded-t-md ${i === 4 ? "bg-accent" : "bg-violet/70"}`}
+              />
+            ))}
+          </div>
+        </div>
+      </div>
     </div>
   );
 }
