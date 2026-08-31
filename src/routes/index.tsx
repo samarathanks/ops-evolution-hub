@@ -1,8 +1,16 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, Link } from "@tanstack/react-router";
 import logoColor from "../assets/thanksup-logo.png.asset.json";
 import logoWhite from "../assets/thanksup-logo-branco.png.asset.json";
 import brandSymbol from "../assets/thanksup-simbolo.png.asset.json";
-import { useState, type FormEvent, type ReactNode } from "react";
+import { useEffect, useState, type FormEvent, type ReactNode } from "react";
+import {
+  CONTACT_EMAIL,
+  SOLUTION_EVENT,
+  WHATSAPP_DISPLAY,
+  WHATSAPP_URL,
+  selectSolution,
+  whatsappLink,
+} from "../lib/contact";
 import {
   Activity,
   ArrowRight,
@@ -16,10 +24,11 @@ import {
   Database,
   Filter,
   Gauge,
-  Image as ImageIcon,
   Layers,
   LineChart,
+  Mail,
   Menu,
+  MessageCircle,
   Minus,
   Plus,
   Repeat,
@@ -64,7 +73,6 @@ const NAV = [
   { label: "Método DNA", href: "#metodo-dna" },
   { label: "Zoho", href: "#zoho" },
   { label: "Por que a Thanks Up", href: "#por-que" },
-  { label: "Conteúdos", href: "#conteudos" },
   { label: "Contato", href: "#contato" },
 ];
 
@@ -245,16 +253,54 @@ function Accordion({
   );
 }
 
-function Placeholder({ label, className = "" }: { label: string; className?: string }) {
+/** Composição gráfica da marca usada no lugar de fotografias. */
+function BrandComposition() {
   return (
-    <div
-      className={`relative flex flex-col items-center justify-center gap-3 overflow-hidden rounded-xl border border-dashed border-secondary bg-primary-soft p-8 text-center ${className}`}
-    >
-      <BrandMark className="pointer-events-none absolute -right-6 -top-6 h-24 w-auto opacity-[0.07]" />
-      <span className="flex h-11 w-11 items-center justify-center rounded-full bg-background text-violet shadow-sm">
-        <ImageIcon size={20} />
-      </span>
-      <p className="max-w-sm text-sm leading-relaxed text-muted-foreground">{label}</p>
+    <div className="relative min-h-[260px] overflow-hidden rounded-2xl border border-border bg-violet-soft p-7">
+      <BrandMark className="pointer-events-none absolute -right-8 -top-8 h-40 w-auto opacity-[0.10]" />
+      <div
+        className="grid-dots pointer-events-none absolute bottom-4 left-4 h-24 w-24 opacity-50"
+        aria-hidden="true"
+      />
+      <div className="relative grid gap-4">
+        <div className="grid grid-cols-3 gap-3">
+          {[
+            { icon: Workflow, label: "Processos" },
+            { icon: Settings2, label: "Tecnologia" },
+            { icon: LineChart, label: "Indicadores" },
+          ].map(({ icon: Icon, label }) => (
+            <div
+              key={label}
+              className="rounded-xl border border-border bg-background p-3 text-center"
+            >
+              <Icon size={18} className="mx-auto text-violet" />
+              <p className="mt-2 text-[11px] font-semibold text-foreground">{label}</p>
+            </div>
+          ))}
+        </div>
+        <div className="flex items-center gap-2" aria-hidden="true">
+          <span className="h-2 w-2 rounded-full bg-violet" />
+          <span className="h-px flex-1 bg-violet/40" />
+          <span className="h-2 w-2 rounded-full bg-accent" />
+          <span className="h-px flex-1 bg-violet/40" />
+          <span className="h-2 w-2 rounded-full bg-violet" />
+        </div>
+        <div className="rounded-xl border border-border bg-background p-4">
+          <div className="flex items-center justify-between">
+            <p className="text-[12px] font-semibold text-foreground">Operação conectada</p>
+            <Share2 size={15} className="text-accent" />
+          </div>
+          <div className="mt-3 flex h-16 items-end gap-2" aria-hidden="true">
+            {[40, 58, 50, 72, 86].map((h, i) => (
+              <div
+                key={i}
+                style={{ height: `${h}%` }}
+                className={`flex-1 rounded-t-md ${i === 4 ? "bg-accent" : "bg-violet/70"}`}
+              />
+            ))}
+          </div>
+        </div>
+      </div>
     </div>
   );
 }
@@ -725,7 +771,11 @@ function SolutionCard({
         </button>
       )}
 
-      <a href="#contato" className="btn-outline mt-7 self-start">
+      <a
+        href="#contato"
+        onClick={() => selectSolution(solution.name)}
+        className="btn-outline mt-7 self-start"
+      >
         {solution.cta} <ArrowUpRight size={16} />
       </a>
     </article>
@@ -956,17 +1006,18 @@ function Zoho() {
             Mais do que configurar uma plataforma, estruturamos a operação que será
             gerenciada por ela.
           </p>
-          <a href="#contato" className="btn-violet mt-8">
+          <a
+            href="#contato"
+            onClick={() => selectSolution("Zoho CRM e Zoho CRM Plus")}
+            className="btn-violet mt-8"
+          >
             Falar sobre Zoho CRM <ArrowRight size={16} />
           </a>
         </div>
 
         <div className="flex flex-col gap-5">
           <CrmMock />
-          <Placeholder
-            className="min-h-[160px] bg-card"
-            label="Espaço reservado para o selo oficial de parceiro autorizado, conforme as diretrizes de marca da Zoho."
-          />
+          {/* Espaço estrutural para o arquivo oficial do selo de parceiro Zoho. */}
         </div>
       </div>
     </section>
@@ -1042,17 +1093,21 @@ function WhyUs() {
         </div>
 
         <div className="flex flex-col gap-6 lg:sticky lg:top-28 lg:self-start">
-          <Placeholder
-            className="min-h-[260px]"
-            label="Espaço reservado para foto real da equipe Thanks Up em reunião com cliente."
-          />
+          <BrandComposition />
           <div className="rounded-2xl bg-primary-deep p-7 text-primary-foreground">
             <Sparkles size={22} className="text-accent" />
             <p className="mt-4 text-[18px] font-semibold leading-snug">
               Pessoas próximas da operação e comprometidas com a execução.
             </p>
-            <a href="#contato" className="btn-accent mt-6">
-              Falar com a equipe
+            <a
+              href={whatsappLink(
+                "Olá, equipe Thanks Up. Gostaria de falar com a equipe sobre a operação da minha empresa.",
+              )}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="btn-accent mt-6"
+            >
+              Falar com a equipe <MessageCircle size={16} />
             </a>
           </div>
         </div>
@@ -1104,7 +1159,8 @@ function ClientProfile() {
   );
 }
 
-/* ---------------- CONTEÚDOS ---------------- */
+/* ---------------- CONTEÚDOS (desativado) ----------------
+   Seção mantida no código para reativação quando existirem artigos reais.
 
 const POSTS = [
   {
@@ -1141,9 +1197,6 @@ function Content() {
                 </span>
               </div>
               <div className="flex flex-1 flex-col p-6">
-                <span className="text-[11px] font-semibold uppercase tracking-[0.14em] text-accent-foreground/60">
-                  Em breve
-                </span>
                 <h3 className="mt-3 text-[17px] font-semibold leading-snug text-foreground">
                   {title}
                 </h3>
@@ -1155,6 +1208,7 @@ function Content() {
     </section>
   );
 }
+------------------------------------------------------- */
 
 /* ---------------- CTA FINAL ---------------- */
 
@@ -1176,8 +1230,15 @@ function FinalCTA() {
           <a href="#contato" className="btn-accent justify-center">
             Solicitar diagnóstico operacional
           </a>
-          <a href="#contato" className="btn-inverse justify-center">
-            Falar com a Thanks Up
+          <a
+            href={whatsappLink(
+              "Olá, equipe Thanks Up. Gostaria de conversar sobre um diagnóstico operacional.",
+            )}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="btn-inverse justify-center"
+          >
+            Falar com a Thanks Up <MessageCircle size={16} />
           </a>
         </div>
         <p className="mt-6 text-sm text-primary-foreground/70">
@@ -1209,12 +1270,79 @@ const FIELDS = [
   { id: "colaboradores", label: "Número aproximado de colaboradores", type: "text" },
 ];
 
+function ContactChannels() {
+  return (
+    <div className="mt-8 grid gap-3">
+      <a
+        href={whatsappLink(
+          "Olá, equipe Thanks Up. Gostaria de conversar sobre um diagnóstico operacional.",
+        )}
+        target="_blank"
+        rel="noopener noreferrer"
+        className="flex items-center gap-3 rounded-xl border border-border bg-card px-5 py-4 transition-colors hover:border-violet"
+      >
+        <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-violet-soft text-violet">
+          <MessageCircle size={18} />
+        </span>
+        <span>
+          <span className="block text-[12px] font-semibold uppercase tracking-[0.12em] text-muted-foreground">
+            WhatsApp
+          </span>
+          <span className="block text-[15px] font-semibold text-foreground">
+            {WHATSAPP_DISPLAY}
+          </span>
+        </span>
+      </a>
+      <a
+        href={`mailto:${CONTACT_EMAIL}`}
+        className="flex items-center gap-3 rounded-xl border border-border bg-card px-5 py-4 transition-colors hover:border-violet"
+      >
+        <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-accent-soft text-primary-deep">
+          <Mail size={18} />
+        </span>
+        <span>
+          <span className="block text-[12px] font-semibold uppercase tracking-[0.12em] text-muted-foreground">
+            E-mail
+          </span>
+          <span className="block text-[15px] font-semibold text-foreground">
+            {CONTACT_EMAIL}
+          </span>
+        </span>
+      </a>
+    </div>
+  );
+}
+
 function Contact() {
-  const [sent, setSent] = useState(false);
+  const [solucao, setSolucao] = useState("");
+  const [consent, setConsent] = useState(false);
+
+  useEffect(() => {
+    function onSelect(e: Event) {
+      const detail = (e as CustomEvent<string>).detail;
+      if (detail) setSolucao(detail);
+    }
+    window.addEventListener(SOLUTION_EVENT, onSelect);
+    return () => window.removeEventListener(SOLUTION_EVENT, onSelect);
+  }, []);
 
   function handleSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
-    setSent(true);
+    const data = new FormData(e.currentTarget);
+    const get = (k: string) => String(data.get(k) ?? "").trim();
+    const message = [
+      "Olá, equipe Thanks Up. Gostaria de conversar sobre um diagnóstico operacional.",
+      "",
+      `Nome: ${get("nome")}`,
+      `Empresa: ${get("empresa")}`,
+      `Cargo: ${get("cargo")}`,
+      `E-mail: ${get("email")}`,
+      `Telefone: ${get("telefone")}`,
+      `Número de colaboradores: ${get("colaboradores")}`,
+      `Solução de interesse: ${get("solucao")}`,
+      `Principal desafio: ${get("desafio")}`,
+    ].join("\n");
+    window.open(whatsappLink(message), "_blank", "noopener,noreferrer");
   }
 
   return (
@@ -1229,67 +1357,104 @@ function Contact() {
             Conte brevemente o cenário atual da sua empresa. A partir daí, iniciamos a
             conversa sobre prioridades e próximos passos.
           </p>
-          <Placeholder
-            className="mt-8 min-h-[180px] bg-card"
-            label="Espaço reservado para dados de contato oficiais (endereço, telefone, e-mail e redes sociais)."
-          />
+          <ContactChannels />
         </div>
 
         <div className="rounded-2xl border border-border bg-card p-7 sm:p-9">
-          {sent ? (
-            <div className="flex min-h-[380px] flex-col items-center justify-center gap-4 text-center">
-              <span className="flex h-14 w-14 items-center justify-center rounded-full bg-violet-soft text-violet">
-                <CheckCircle2 size={26} />
-              </span>
-              <h3 className="text-xl font-semibold text-foreground">
-                Solicitação enviada
-              </h3>
-              <p className="max-w-md text-[15px] leading-relaxed text-muted-foreground">
-                Recebemos suas informações. Nossa equipe entrará em contato para compreender
-                melhor o cenário da sua empresa.
-              </p>
-              <button
-                type="button"
-                onClick={() => setSent(false)}
-                className="btn-ghost mt-2"
+          <form onSubmit={handleSubmit} className="grid gap-5 sm:grid-cols-2">
+            {FIELDS.map((f) => (
+              <div key={f.id} className="flex flex-col gap-1.5">
+                <label htmlFor={f.id} className="form-label">
+                  {f.label} <span className="text-violet">*</span>
+                </label>
+                <input
+                  id={f.id}
+                  name={f.id}
+                  type={f.type}
+                  required
+                  maxLength={120}
+                  className="form-input"
+                />
+              </div>
+            ))}
+            <div className="flex flex-col gap-1.5 sm:col-span-2">
+              <label htmlFor="solucao" className="form-label">
+                Solução de interesse <span className="text-violet">*</span>
+              </label>
+              <select
+                id="solucao"
+                name="solucao"
+                required
+                className="form-input"
+                value={solucao}
+                onChange={(e) => setSolucao(e.target.value)}
               >
-                Enviar nova solicitação
-              </button>
+                <option value="">Selecione uma opção</option>
+                {SOLUTION_OPTIONS.map((o) => (
+                  <option key={o} value={o}>
+                    {o}
+                  </option>
+                ))}
+              </select>
             </div>
-          ) : (
-            <form onSubmit={handleSubmit} className="grid gap-5 sm:grid-cols-2">
-              {FIELDS.map((f) => (
-                <div key={f.id} className="flex flex-col gap-1.5">
-                  <label htmlFor={f.id} className="form-label">
-                    {f.label}
-                  </label>
-                  <input id={f.id} name={f.id} type={f.type} required className="form-input" />
-                </div>
-              ))}
-              <div className="flex flex-col gap-1.5 sm:col-span-2">
-                <label htmlFor="solucao" className="form-label">
-                  Solução de interesse
-                </label>
-                <select id="solucao" name="solucao" required className="form-input">
-                  <option value="">Selecione uma opção</option>
-                  {SOLUTION_OPTIONS.map((o) => (
-                    <option key={o} value={o}>
-                      {o}
-                    </option>
-                  ))}
-                </select>
-              </div>
-              <div className="flex flex-col gap-1.5 sm:col-span-2">
-                <label htmlFor="desafio" className="form-label">
-                  Principal desafio da empresa
-                </label>
-                <textarea id="desafio" name="desafio" rows={4} required className="form-input" />
-              </div>
-              <button type="submit" className="btn-violet sm:col-span-2 justify-center">
-                Enviar solicitação
-              </button>
-            </form>
-          )}
+            <div className="flex flex-col gap-1.5 sm:col-span-2">
+              <label htmlFor="desafio" className="form-label">
+                Principal desafio da empresa <span className="text-violet">*</span>
+              </label>
+              <textarea
+                id="desafio"
+                name="desafio"
+                rows={4}
+                required
+                maxLength={1000}
+                className="form-input"
+              />
+            </div>
+
+            <div className="sm:col-span-2">
+              <label
+                htmlFor="consentimento"
+                className="flex items-start gap-3 text-[14px] leading-relaxed text-muted-foreground"
+              >
+                <input
+                  id="consentimento"
+                  name="consentimento"
+                  type="checkbox"
+                  required
+                  checked={consent}
+                  onChange={(e) => setConsent(e.target.checked)}
+                  className="mt-1 h-4 w-4 shrink-0 accent-[var(--violet)]"
+                />
+                <span>
+                  Concordo com o{" "}
+                  <Link
+                    to="/privacidade"
+                    className="font-semibold text-violet underline underline-offset-4"
+                  >
+                    uso dos meus dados
+                  </Link>{" "}
+                  para que a Thanks Up entre em contato sobre esta solicitação.
+                </span>
+              </label>
+            </div>
+
+            <button type="submit" className="btn-violet justify-center sm:col-span-2">
+              Enviar pelo WhatsApp <MessageCircle size={16} />
+            </button>
+            <p className="text-[13px] leading-relaxed text-muted-foreground sm:col-span-2">
+              Você será direcionado ao WhatsApp da Thanks Up com as informações preenchidas.
+            </p>
+            <p className="text-[13px] leading-relaxed text-muted-foreground sm:col-span-2">
+              Prefere enviar por e-mail? Escreva para{" "}
+              <a
+                href={`mailto:${CONTACT_EMAIL}`}
+                className="font-semibold text-violet underline underline-offset-4"
+              >
+                {CONTACT_EMAIL}
+              </a>
+              .
+            </p>
+          </form>
         </div>
       </div>
     </section>
@@ -1304,9 +1469,8 @@ const FOOTER_LINKS = [
   { label: "Método DNA", href: "#metodo-dna" },
   { label: "Zoho CRM", href: "#zoho" },
   { label: "Por que a Thanks Up", href: "#por-que" },
-  { label: "Conteúdos", href: "#conteudos" },
   { label: "Contato", href: "#contato" },
-  { label: "Política de Privacidade", href: "#contato" },
+  { label: "Política de Privacidade", href: "/privacidade", internal: true },
 ];
 
 function Footer() {
@@ -1334,12 +1498,21 @@ function Footer() {
           <ul className="mt-4 grid gap-2.5">
             {FOOTER_LINKS.map((l) => (
               <li key={l.label}>
-                <a
-                  href={l.href}
-                  className="text-[15px] text-primary-foreground/75 transition-colors hover:text-accent"
-                >
-                  {l.label}
-                </a>
+                {l.internal ? (
+                  <Link
+                    to={l.href}
+                    className="text-[15px] text-primary-foreground/75 transition-colors hover:text-accent"
+                  >
+                    {l.label}
+                  </Link>
+                ) : (
+                  <a
+                    href={l.href}
+                    className="text-[15px] text-primary-foreground/75 transition-colors hover:text-accent"
+                  >
+                    {l.label}
+                  </a>
+                )}
               </li>
             ))}
           </ul>
@@ -1348,9 +1521,28 @@ function Footer() {
           <p className="text-[12px] font-semibold uppercase tracking-[0.14em] text-primary-foreground">
             Contato
           </p>
-          <div className="mt-4 rounded-xl border border-dashed border-primary-foreground/30 p-5 text-sm leading-relaxed text-primary-foreground/75">
-            Espaço reservado para endereço, telefone, e-mail, CNPJ e redes sociais oficiais.
-          </div>
+          <ul className="mt-4 grid gap-3 text-[15px]">
+            <li>
+              <a
+                href={WHATSAPP_URL}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-2 text-primary-foreground/80 transition-colors hover:text-accent"
+              >
+                <MessageCircle size={16} className="shrink-0" />
+                WhatsApp: {WHATSAPP_DISPLAY}
+              </a>
+            </li>
+            <li>
+              <a
+                href={`mailto:${CONTACT_EMAIL}`}
+                className="inline-flex items-center gap-2 text-primary-foreground/80 transition-colors hover:text-accent"
+              >
+                <Mail size={16} className="shrink-0" />
+                {CONTACT_EMAIL}
+              </a>
+            </li>
+          </ul>
         </div>
       </div>
       <div className="relative mx-auto mt-12 max-w-6xl border-t border-primary-foreground/15 px-5 pt-6">
@@ -1375,8 +1567,7 @@ function Index() {
         <Zoho />
         <WhyUs />
         <ClientProfile />
-        <Content />
-
+        {/* Seção "Conteúdos" desativada até existirem artigos reais (ver componente Content). */}
         <FinalCTA />
         <Contact />
       </main>
