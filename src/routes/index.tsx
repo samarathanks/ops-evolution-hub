@@ -1304,9 +1304,8 @@ const FOOTER_LINKS = [
   { label: "Método DNA", href: "#metodo-dna" },
   { label: "Zoho CRM", href: "#zoho" },
   { label: "Por que a Thanks Up", href: "#por-que" },
-  { label: "Conteúdos", href: "#conteudos" },
   { label: "Contato", href: "#contato" },
-  { label: "Política de Privacidade", href: "#contato" },
+  { label: "Política de Privacidade", href: "/privacidade", internal: true },
 ];
 
 function Footer() {
@@ -1334,12 +1333,21 @@ function Footer() {
           <ul className="mt-4 grid gap-2.5">
             {FOOTER_LINKS.map((l) => (
               <li key={l.label}>
-                <a
-                  href={l.href}
-                  className="text-[15px] text-primary-foreground/75 transition-colors hover:text-accent"
-                >
-                  {l.label}
-                </a>
+                {l.internal ? (
+                  <Link
+                    to={l.href}
+                    className="text-[15px] text-primary-foreground/75 transition-colors hover:text-accent"
+                  >
+                    {l.label}
+                  </Link>
+                ) : (
+                  <a
+                    href={l.href}
+                    className="text-[15px] text-primary-foreground/75 transition-colors hover:text-accent"
+                  >
+                    {l.label}
+                  </a>
+                )}
               </li>
             ))}
           </ul>
@@ -1348,9 +1356,28 @@ function Footer() {
           <p className="text-[12px] font-semibold uppercase tracking-[0.14em] text-primary-foreground">
             Contato
           </p>
-          <div className="mt-4 rounded-xl border border-dashed border-primary-foreground/30 p-5 text-sm leading-relaxed text-primary-foreground/75">
-            Espaço reservado para endereço, telefone, e-mail, CNPJ e redes sociais oficiais.
-          </div>
+          <ul className="mt-4 grid gap-3 text-[15px]">
+            <li>
+              <a
+                href={WHATSAPP_URL}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-2 text-primary-foreground/80 transition-colors hover:text-accent"
+              >
+                <MessageCircle size={16} className="shrink-0" />
+                WhatsApp: {WHATSAPP_DISPLAY}
+              </a>
+            </li>
+            <li>
+              <a
+                href={`mailto:${CONTACT_EMAIL}`}
+                className="inline-flex items-center gap-2 text-primary-foreground/80 transition-colors hover:text-accent"
+              >
+                <Mail size={16} className="shrink-0" />
+                {CONTACT_EMAIL}
+              </a>
+            </li>
+          </ul>
         </div>
       </div>
       <div className="relative mx-auto mt-12 max-w-6xl border-t border-primary-foreground/15 px-5 pt-6">
@@ -1375,8 +1402,7 @@ function Index() {
         <Zoho />
         <WhyUs />
         <ClientProfile />
-        <Content />
-
+        {/* Seção "Conteúdos" desativada até existirem artigos reais (ver componente Content). */}
         <FinalCTA />
         <Contact />
       </main>
